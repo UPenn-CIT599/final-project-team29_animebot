@@ -1,3 +1,4 @@
+package MyAnimeList;
 import java.util.ArrayList;
 import java.util.Map;
 
