@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -15,7 +16,7 @@ public class MyAnimeList {
     
     private static String[] ANIME_TOP_CATEGORIES = new String[]{"airing","upcoming","tv","movie","ova","special","bypopularity","favorite"};
     private static String[] MANGA_TOP_CATEGORIES = new String[]{"manga","novels","oneshots","doujin","manhwa","manhua","bypopularity","favorite"};
-    
+
     private static Map<Integer, Anime> animeList = new HashMap<>();
     private static Map<Integer, Manga> mangaList = new HashMap<>();
     private static Map<String, User> userList = new HashMap<>();
@@ -249,5 +250,81 @@ public class MyAnimeList {
         in.close();
              
         return response.toString();
+    }
+    
+    /**
+     * Search for anime by title
+     * @param title Title of anime
+     * @param limit Max number of results to return
+     * @return
+     */
+    public static TreeMap<Integer, Anime> searchForAnimeByTitle(String title, int limit) {
+        if (limit < 1) {
+            limit = 1;
+        }
+        
+        TreeMap<Integer, Anime> results = new TreeMap<>();
+        Map<Integer, MyAnimeListResult> searchResults = searchByTitleAndType(title, "anime", limit);
+        for (int index : searchResults.keySet()) {
+            results.put(index, getAnime(searchResults.get(index).getId()));
+        }
+        
+        return results;
+    }
+    
+    /**
+     * Search for manga by title
+     * @param title Title of manga
+     * @param limit Max number of results to return
+     * @return
+     */
+    public static TreeMap<Integer, Manga> searchForMangaByTitle(String title, int limit) {
+        if (limit < 1) {
+            limit = 1;
+        }
+        
+        TreeMap<Integer, Manga> results = new TreeMap<>();
+        Map<Integer, MyAnimeListResult> searchResults = searchByTitleAndType(title, "manga", limit);
+        for (int index : searchResults.keySet()) {
+            results.put(index, getManga(searchResults.get(index).getId()));
+        }
+        
+        return results;
+    }
+    
+    /**
+     * Search for anime or manga by title
+     * @param title Title of anime or manga
+     * @param mediaType anime or manga
+     * @param limit Max number of results to return
+     * @return
+     */
+    private static TreeMap<Integer, MyAnimeListResult> searchByTitleAndType(String title, String mediaType, int limit) {
+        TreeMap<Integer, MyAnimeListResult> searchResults = new TreeMap<>();
+        
+        try {
+            String jsonResponse = makeAPICall("/search/" + mediaType + "?q=" + URLEncoder.encode(title, "UTF-8") + "&limit=" + Integer.toString(limit));
+            JSONObject jObj = new JSONObject(jsonResponse);
+            JSONArray jArray = jObj.getJSONArray("results");
+            
+            int malId;
+            String type;
+            JSONObject obj;
+            for (int i = 0; i < jArray.length(); i++) {
+                obj = jArray.getJSONObject(i);
+                malId = obj.getInt("mal_id");
+                type = obj.getString("type");
+                
+                MyAnimeListResult result = new MyAnimeListResult(malId, type);
+                result.setValues(obj);
+                
+                searchResults.put(i + 1, result);
+            }
+            
+            return searchResults;
+            
+        } catch (IOException | JSONException e) {
+            return null;
+        }
     }
 }
