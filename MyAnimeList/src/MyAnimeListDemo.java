@@ -107,10 +107,28 @@ public class MyAnimeListDemo {
         }
     }
     
+    public static void demoSearchForAnime(String title) {
+        Map<Integer, Anime> searchResults = MyAnimeList.searchForAnimeByTitle(title, 5);
+        System.out.println("Search results for " + title);
+        for (int rank : searchResults.keySet()) {
+            System.out.println(Integer.toString(rank) + ": " + searchResults.get(rank).getTitle());
+        }
+    }
+    
+    public static void demoSearchForManga(String title) {
+        Map<Integer, Manga> searchResults = MyAnimeList.searchForMangaByTitle(title, 5);
+        System.out.println("Search results for " + title);
+        for (int rank : searchResults.keySet()) {
+            System.out.println(Integer.toString(rank) + ": " + searchResults.get(rank).getTitle());
+        }
+    }
+    
     public static void main(String[] args) {
-        demoAnimeMethods(2);
+        //demoAnimeMethods(2);
         //demoMangaMethods(5);
         //demoUserMethods("Maxine");
+        demoSearchForAnime("Meitantei Conan");
+        demoSearchForManga("Detective Conan");
     }
 
 }
