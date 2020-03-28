@@ -196,15 +196,9 @@ public class MyAnimeListMedia extends MyAnimeListObject {
      * Retrieve and update object values
      */
     protected boolean setDetails() {
-        try {
-            String result = MyAnimeList.makeAPICall("/" + media + "/" + id);
-            setValues(result);
-            return true;
-        }
-        catch (JSONException e) {
-            // invalid id
-            return false;
-        }
+        String result = MyAnimeList.makeAPICall("/" + media + "/" + id);
+        setValues(result);
+        return true;
     }
     
     protected boolean setNews() {

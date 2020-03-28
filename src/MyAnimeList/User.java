@@ -106,16 +106,10 @@ public class User extends MyAnimeListObject {
      * @return True if update is successful, false if not
      */
     public boolean setDetails(String username) {
-        try {
-            String result = MyAnimeList.makeAPICall("/user/" + username);
-            setValues(result);
-            id = getIntegerValue("user_id");
-            return true;
-        }
-        catch (JSONException e) {
-            // invalid username
-            return false;
-        }
+        String result = MyAnimeList.makeAPICall("/user/" + username);
+        setValues(result);
+        id = getIntegerValue("user_id");
+        return true;
     }
     
     /**

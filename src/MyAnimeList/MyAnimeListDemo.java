@@ -125,7 +125,7 @@ public class MyAnimeListDemo {
     }
     
     public static void main(String[] args) {
-        //demoAnimeMethods(2);
+        demoAnimeMethods(2);
         //demoMangaMethods(5);
         //demoUserMethods("Maxine");
         //demoSearchForAnime("Meitantei Conan");

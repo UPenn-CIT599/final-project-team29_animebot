@@ -49,17 +49,22 @@ public class MyAnimeList {
      * @return Partial or complete anime profile
      * @throws JSONException 
      */
-    public static Anime getAnime(JSONObject resp) throws JSONException {
-        int id = resp.getInt("mal_id");
-        
-        if (animeList.containsKey(id)) {
-            return animeList.get(id);
-        }
+    public static Anime getAnime(JSONObject resp) {
+        try {
+            int id = resp.getInt("mal_id");
+            
+            if (animeList.containsKey(id)) {
+                return animeList.get(id);
+            }
 
-        Anime anime = new Anime(id);
-        anime.setValues(resp);
-        animeList.put(id, anime);
-        return anime;
+            Anime anime = new Anime(id);
+            anime.setValues(resp);
+            animeList.put(id, anime);
+            return anime;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
     
     /**
@@ -89,17 +94,22 @@ public class MyAnimeList {
      * @return Partial or complete manga profile
      * @throws JSONException 
      */
-    public static Manga getManga(JSONObject resp) throws JSONException {
-        int id = resp.getInt("mal_id");
-        
-        if (mangaList.containsKey(id)) {
-            return mangaList.get(id);
+    public static Manga getManga(JSONObject resp) {
+        try {
+            int id = resp.getInt("mal_id");
+            
+            if (mangaList.containsKey(id)) {
+                return mangaList.get(id);
+            }
+            
+            Manga manga = new Manga(id);
+            manga.setValues(resp);
+            mangaList.put(id, manga);
+            return manga;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
         }
-        
-        Manga manga = new Manga(id);
-        manga.setValues(resp);
-        mangaList.put(id, manga);
-        return manga;
     }
     
     /**
