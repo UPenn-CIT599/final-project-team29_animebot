@@ -140,7 +140,7 @@ public class MyAnimeList {
                 topAnime.put(rank, anime);
             }
             
-        } catch (IOException | JSONException e) {
+        } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -186,7 +186,7 @@ public class MyAnimeList {
                 topManga.put(rank, manga);
             }
             
-        } catch (IOException | JSONException e) {
+        } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -236,21 +236,25 @@ public class MyAnimeList {
      * Performs a HTTP GET request to the MyAnimeList API
      * @param query Request path
      * @return JSON response as a String
-     * @throws IOException
      */
-    public static String makeAPICall(String query) throws IOException {
-        URL restCall = new URL(ENDPOINT + query);
-        URLConnection yc = restCall.openConnection();
-        BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-        
-        String inputLine;
-        StringBuffer response = new StringBuffer();
-        while ((inputLine = in.readLine()) != null) {
-             response.append(inputLine);
+    public static String makeAPICall(String query) {
+        try {
+            URL restCall = new URL(ENDPOINT + query);
+            URLConnection yc = restCall.openConnection();
+            BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+            
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                 response.append(inputLine);
+            }
+            in.close();
+                 
+            return response.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
-        in.close();
-             
-        return response.toString();
     }
     
     /**

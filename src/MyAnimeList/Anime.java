@@ -1,5 +1,4 @@
 package MyAnimeList;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -141,7 +140,7 @@ public class Anime extends MyAnimeListMedia {
             this.episodeList = episodes;
             return true;
         }
-        catch (IOException | JSONException e) {
+        catch (JSONException e) {
             return false;
         }
     }
@@ -160,7 +159,7 @@ public class Anime extends MyAnimeListMedia {
                 recommendations.put(i + 1, anime);
             }
             
-        } catch (IOException | JSONException e) {
+        } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }

@@ -1,5 +1,4 @@
 package MyAnimeList;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -96,7 +95,7 @@ public class User extends MyAnimeListObject {
             this.animeList = animeList;
             return true;
         }
-        catch (IOException | JSONException e) {
+        catch (JSONException e) {
             return false;
         }
     }
@@ -113,7 +112,7 @@ public class User extends MyAnimeListObject {
             id = getIntegerValue("user_id");
             return true;
         }
-        catch (IOException | JSONException e) {
+        catch (JSONException e) {
             // invalid username
             return false;
         }
@@ -148,7 +147,7 @@ public class User extends MyAnimeListObject {
             this.mangaList = mangaList;
             return true;
         }
-        catch (IOException | JSONException e) {
+        catch (JSONException e) {
             return false;
         }
     }

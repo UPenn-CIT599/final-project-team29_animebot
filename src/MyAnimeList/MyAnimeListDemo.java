@@ -128,8 +128,8 @@ public class MyAnimeListDemo {
         //demoAnimeMethods(2);
         //demoMangaMethods(5);
         //demoUserMethods("Maxine");
-        demoSearchForAnime("Meitantei Conan");
-        demoSearchForManga("Detective Conan");
+        //demoSearchForAnime("Meitantei Conan");
+        //demoSearchForManga("Detective Conan");
     }
 
 }

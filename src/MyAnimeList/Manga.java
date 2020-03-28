@@ -1,5 +1,4 @@
 package MyAnimeList;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -61,7 +60,7 @@ public class Manga extends MyAnimeListMedia {
                 recommendations.put(i + 1, manga);
             }
             
-        } catch (IOException | JSONException e) {
+        } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }

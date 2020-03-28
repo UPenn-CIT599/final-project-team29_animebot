@@ -1,5 +1,4 @@
 package MyAnimeList;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -202,7 +201,7 @@ public class MyAnimeListMedia extends MyAnimeListObject {
             setValues(result);
             return true;
         }
-        catch (IOException | JSONException e) {
+        catch (JSONException e) {
             // invalid id
             return false;
         }
@@ -236,7 +235,7 @@ public class MyAnimeListMedia extends MyAnimeListObject {
             this.articles = articles;
             return true;
         }
-        catch (IOException | JSONException e) {
+        catch (JSONException e) {
             return false;
         }
     }
@@ -263,7 +262,7 @@ public class MyAnimeListMedia extends MyAnimeListObject {
             this.pictures = pictures;
             return true;
         }
-        catch (IOException | JSONException e) {
+        catch (JSONException e) {
             return false;
         }
     }
@@ -294,7 +293,7 @@ public class MyAnimeListMedia extends MyAnimeListObject {
             this.reviews = reviews;
             return true;
         }
-        catch (IOException | JSONException e) {
+        catch (JSONException e) {
             return false;
         }
     }
