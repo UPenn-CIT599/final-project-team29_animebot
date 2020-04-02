@@ -7,6 +7,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * User profile on MyAnimeList
+ */
 public class User extends MyAnimeListObject {
     private static Map<String, String> USER_PROPERTY_TYPES = new HashMap<>();
     static {

@@ -5,6 +5,9 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Base class for all MyAnimeList classes 
+ */
 public class MyAnimeListObject {
     protected int id;
     protected Map<String, String> propertyTypes;

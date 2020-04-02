@@ -2,6 +2,9 @@ package MyAnimeList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * News articles on MyAnimeList
+ */
 public class News extends MyAnimeListObject {
     private static Map<String, String> NEWS_PROPERTY_TYPES = new HashMap<>();
     static {

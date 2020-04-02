@@ -6,6 +6,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Base object for MyAnimeList media types (ie Anime, Manga)
+ */
 public class MyAnimeListMedia extends MyAnimeListObject {
     protected static Map<String, String> MEDIA_PROPERTY_TYPES = new HashMap<>();
     static {

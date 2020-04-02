@@ -5,6 +5,9 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * User reviews on MyAnimeList
+ */
 public class Review extends MyAnimeListObject {
     private static Map<String, String> REVIEW_PROPERTY_TYPES = new HashMap<>();
     static {

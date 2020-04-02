@@ -12,6 +12,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Use this class to interact with MyAnimeList
+ */
 public class MyAnimeList {
     private static String ENDPOINT = "https://api.jikan.moe/v3"; 
     

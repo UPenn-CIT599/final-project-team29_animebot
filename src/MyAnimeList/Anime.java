@@ -8,6 +8,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Anime profile on MyAnimeList 
+ */
 public class Anime extends MyAnimeListMedia {
     private static Map<String, String> ANIME_PROPERTY_TYPES = new HashMap<>();
     static {

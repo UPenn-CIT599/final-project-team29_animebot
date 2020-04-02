@@ -2,6 +2,9 @@ package MyAnimeList;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * Demo class to be removed prior to submission of the project
+ */
 public class MyAnimeListDemo {
 
     public static void demoAnimeMethods(int top) {

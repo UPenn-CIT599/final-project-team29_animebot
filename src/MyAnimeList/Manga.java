@@ -7,6 +7,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Manga profile on MyAnimeList
+ */
 public class Manga extends MyAnimeListMedia {
     private static Map<String, String> MANGA_PROPERTY_TYPES = new HashMap<>();
     static {

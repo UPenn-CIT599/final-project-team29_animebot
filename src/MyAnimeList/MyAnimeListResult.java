@@ -2,6 +2,9 @@ package MyAnimeList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Search results from MyAnimeList
+ */
 public class MyAnimeListResult extends MyAnimeListObject {
     private static Map<String, String> SEARCH_RESULT_PROPERTY_TYPES = new HashMap<>();
     static {
