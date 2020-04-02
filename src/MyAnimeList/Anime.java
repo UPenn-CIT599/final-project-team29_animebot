@@ -26,13 +26,18 @@ public class Anime extends MyAnimeListMedia {
         super(id, "anime", ANIME_PROPERTY_TYPES);
     }
     
+    /**
+     * Gets list of related anime
+     * @param relation Relation to the anime: Prequel or Sequel
+     * @return List of related anime for relation
+     */
     private ArrayList<Anime> findRelatedAnime(String relation) {
+        ArrayList<Anime> relatedAnimes = new ArrayList<>();
         if (!getRelated().has(relation)) {
-            return null;
+            return relatedAnimes;
         }
         
         try {
-            ArrayList<Anime> relatedAnimes = new ArrayList<>();
             JSONArray jArray = getRelated().getJSONArray(relation);
             
             for (int i = 0; i < jArray.length(); i++) {
@@ -45,9 +50,13 @@ public class Anime extends MyAnimeListMedia {
             e.printStackTrace();
         }
         
-        return null;
+        return relatedAnimes;
     }
     
+    /**
+     * Gets list of episodes for the anime
+     * @return List of episodes, sorted by ascending episode order
+     */
     public TreeMap<Integer, AnimeEpisode> getEpisodeList() {
         if (episodeList == null) {
             setEpisodes();
@@ -56,26 +65,38 @@ public class Anime extends MyAnimeListMedia {
         return episodeList;
     }
     
+    /**
+     * Gets number of episodes for the anime
+     * @return Number of episodes
+     */
     public int getEpisodes() {
         return getIntegerValue("episodes");
     }
     
+    /**
+     * Gets season and year the anime premiered
+     * @return Season and year of anime premier
+     */
     public String getPremiered() {
         return getStringValue("premiered");
     }
     
+    /**
+     * Gets list of prequels for this anime
+     * @return List of prequels
+     */
     public ArrayList<Anime> getPrequel() {
         if (prequel == null) {
-            if (!getRelated().has("Prequel")){
-                return null;
-            }
-            
             prequel = findRelatedAnime("Prequel");
         }
         
         return prequel;
     }
     
+    /**
+     * Gets list of user-submitted anime recommendations based on this anime
+     * @return List of anime recommendations, sorted in descending order of recommendation count
+     */
     public TreeMap<Integer, Anime> getRecommendations() {
         if (recommendations == null) {
             setRecommendations();
@@ -84,30 +105,46 @@ public class Anime extends MyAnimeListMedia {
         return recommendations;
     }
         
+    /**
+     * Gets list of sequels for this anime
+     * @return List of sequels
+     */
     public ArrayList<Anime> getSequel() {
         if (sequel == null) {
-            if (!getRelated().has("Sequel")){
-                return null;
-            }
-            
             sequel = findRelatedAnime("Sequel");
         }
         
         return sequel;
     }
     
+    /**
+     * Gets the original source/inspiration for the anime
+     * @return Source of the anime
+     */
     public String getSource() {
         return getStringValue("source");
     }
     
+    /**
+     * Gets the trailer video url for the anime 
+     * @return Trailer video url
+     */
     public String getTrailerUrl() {
         return getStringValue("trailer_url");
     }
     
+    /**
+     * Gets the airing status for the anime
+     * @return True if still airing, False if not
+     */
     public boolean isAiring() {
         return getBooleanValue("airing");
     }
     
+    /**
+     * Updates the episode list for this anime
+     * @return True if episode list is successfully updated, False if not
+     */
     private boolean setEpisodes() {
         int animeId = getId();
         
@@ -145,6 +182,10 @@ public class Anime extends MyAnimeListMedia {
         }
     }
     
+    /**
+     * Updates the recommendations based on this anime
+     * @return True if recommendations is successfully updated, False if not
+     */
     private boolean setRecommendations() {
         TreeMap<Integer, Anime> recommendations = new TreeMap<>();
         
