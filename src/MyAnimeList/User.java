@@ -29,10 +29,18 @@ public class User extends MyAnimeListObject {
         super(id, USER_PROPERTY_TYPES);
     }
     
+    /**
+     * Get about information of the user
+     * @return About information
+     */
     public String getAbout() {
         return getStringValue("about");
     }
     
+    /**
+     * Gets the list of anime that the user has added to their profile
+     * @return List of anime
+     */
     public ArrayList<Anime> getAnimeList() {
         if (animeList == null) {
             setAnimeList();
@@ -41,18 +49,34 @@ public class User extends MyAnimeListObject {
         return animeList;
     }
     
+    /**
+     * Gets the gender of the user
+     * @return Gender
+     */
     public String getGender() {
         return getStringValue("gender");
     }
     
+    /**
+     * Gets the profile picture url of the user
+     * @return Profile picture url
+     */
     public String getImageUrl() {
         return getStringValue("image_url");
     }
     
+    /**
+     * Gets the location of the user
+     * @return User location
+     */
     public String getLocation() {
         return getStringValue("location");
     }
     
+    /**
+     * Gets the list of manga that the user has added to their profile
+     * @return List of manga
+     */
     public ArrayList<Manga> getMangaList() {
         if (mangaList == null) {
             setMangaList();
@@ -61,10 +85,18 @@ public class User extends MyAnimeListObject {
         return mangaList;
     }
     
+    /**
+     * Gets the url to the user's profile
+     * @return User profile url
+     */
     public String getUrl() {
         return getStringValue("url");
     }
     
+    /**
+     * Gets the user's username
+     * @return Username
+     */
     public String getUsername() {
         return getStringValue("username");
     }
