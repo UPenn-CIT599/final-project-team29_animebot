@@ -23,46 +23,100 @@ public class MyAnimeListObject {
         this.propertyTypes = propertyTypes;
     }
 
+    /**
+     * Gets the id of the object
+     * @return Id
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Gets the Boolean key's value of the object
+     * @param Boolean key
+     * @return Boolean value
+     */
     protected boolean getBooleanValue(String key) {
         return booleanProperties.get(key);
     }
 
+    /**
+     * Gets the Double key's value of the object
+     * @param Double key
+     * @return Double value
+     */
     protected double getDoubleValue(String key) {
         return doubleProperties.get(key);
     }
 
+    /**
+     * Gets the JSONObject key's value of the object
+     * @param JSONObject key
+     * @return JSONObject value
+     */
     protected JSONObject getJsonValue(String key) {
         return jsonProperties.get(key);
     }
 
+    /**
+     * Gets the Integer key's value of the object
+     * @param Integer key
+     * @return Integer value
+     */
     protected int getIntegerValue(String key) {
         return integerProperties.get(key);
     }
 
+    /**
+     * Gets the String key's value of the object
+     * @param String key
+     * @return String value
+     */
     protected String getStringValue(String key) {
         return stringProperties.get(key);
     }
 
+    /**
+     * Updates the Boolean key's value
+     * @param Boolean key
+     * @param Boolean value
+     */
     protected void setBooleanValue(String key, boolean value) {
         booleanProperties.put(key, value);
     }
 
+    /**
+     * Updates the Double key's value
+     * @param Double key
+     * @param Double value
+     */
     protected void setDoubleValue(String key, double value) {
         doubleProperties.put(key, value);
     }
 
+    /**
+     * Updates the Integer key's value
+     * @param Integer key
+     * @param Integer value
+     */
     protected void setIntegerValue(String key, int value) {
         integerProperties.put(key, value);
     }
 
+    /**
+     * Updates the JSONObject key's value
+     * @param JSONObject key
+     * @param JSONObject value
+     */
     protected void setJsonValue(String key, JSONObject value) {
         jsonProperties.put(key, value);
     }
 
+    /**
+     * Updates the String key's value
+     * @param String key
+     * @param String value
+     */
     protected void setStringValue(String key, String value) {
         stringProperties.put(key, value);
     }
