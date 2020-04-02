@@ -28,22 +28,42 @@ public class MyAnimeListResult extends MyAnimeListObject {
         propertyTypes.putAll(additionalPropertyTypes);
     }
     
+    /**
+     * Gets the Image url for this search result
+     * @return Image url
+     */
     public String getImageUrl() {
         return getStringValue("image_url");
     }
     
+    /**
+     * Gets the synopsis for this search result
+     * @return Synopsis
+     */
     public String getSynopsis() {
         return getStringValue("synopsis");
     }
     
+    /**
+     * Gets the title of this search result
+     * @return Title
+     */
     public String getTitle() {
         return getStringValue("title");
     }
     
+    /**
+     * Gets the media type of this search result
+     * @return Media type
+     */
     public String getType() {
         return getStringValue("type");
     }
     
+    /**
+     * Gets the profile url to this search result
+     * @return Profile url
+     */
     public String getUrl() {
         return getStringValue("url");
     }
