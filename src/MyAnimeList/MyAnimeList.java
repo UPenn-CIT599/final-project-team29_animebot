@@ -1,8 +1,10 @@
+package MyAnimeList;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -10,12 +12,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Use this class to interact with MyAnimeList
+ */
 public class MyAnimeList {
     private static String ENDPOINT = "https://api.jikan.moe/v3"; 
     
     private static String[] ANIME_TOP_CATEGORIES = new String[]{"airing","upcoming","tv","movie","ova","special","bypopularity","favorite"};
     private static String[] MANGA_TOP_CATEGORIES = new String[]{"manga","novels","oneshots","doujin","manhwa","manhua","bypopularity","favorite"};
-    
+
     private static Map<Integer, Anime> animeList = new HashMap<>();
     private static Map<Integer, Manga> mangaList = new HashMap<>();
     private static Map<String, User> userList = new HashMap<>();
@@ -47,17 +52,22 @@ public class MyAnimeList {
      * @return Partial or complete anime profile
      * @throws JSONException 
      */
-    public static Anime getAnime(JSONObject resp) throws JSONException {
-        int id = resp.getInt("mal_id");
-        
-        if (animeList.containsKey(id)) {
-            return animeList.get(id);
-        }
+    public static Anime getAnime(JSONObject resp) {
+        try {
+            int id = resp.getInt("mal_id");
+            
+            if (animeList.containsKey(id)) {
+                return animeList.get(id);
+            }
 
-        Anime anime = new Anime(id);
-        anime.setValues(resp);
-        animeList.put(id, anime);
-        return anime;
+            Anime anime = new Anime(id);
+            anime.setValues(resp);
+            animeList.put(id, anime);
+            return anime;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
     
     /**
@@ -87,17 +97,22 @@ public class MyAnimeList {
      * @return Partial or complete manga profile
      * @throws JSONException 
      */
-    public static Manga getManga(JSONObject resp) throws JSONException {
-        int id = resp.getInt("mal_id");
-        
-        if (mangaList.containsKey(id)) {
-            return mangaList.get(id);
+    public static Manga getManga(JSONObject resp) {
+        try {
+            int id = resp.getInt("mal_id");
+            
+            if (mangaList.containsKey(id)) {
+                return mangaList.get(id);
+            }
+            
+            Manga manga = new Manga(id);
+            manga.setValues(resp);
+            mangaList.put(id, manga);
+            return manga;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
         }
-        
-        Manga manga = new Manga(id);
-        manga.setValues(resp);
-        mangaList.put(id, manga);
-        return manga;
     }
     
     /**
@@ -138,7 +153,7 @@ public class MyAnimeList {
                 topAnime.put(rank, anime);
             }
             
-        } catch (IOException | JSONException e) {
+        } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -184,7 +199,7 @@ public class MyAnimeList {
                 topManga.put(rank, manga);
             }
             
-        } catch (IOException | JSONException e) {
+        } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -234,20 +249,100 @@ public class MyAnimeList {
      * Performs a HTTP GET request to the MyAnimeList API
      * @param query Request path
      * @return JSON response as a String
-     * @throws IOException
      */
-    public static String makeAPICall(String query) throws IOException {
-        URL restCall = new URL(ENDPOINT + query);
-        URLConnection yc = restCall.openConnection();
-        BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-        
-        String inputLine;
-        StringBuffer response = new StringBuffer();
-        while ((inputLine = in.readLine()) != null) {
-             response.append(inputLine);
+    public static String makeAPICall(String query) {
+        try {
+            URL restCall = new URL(ENDPOINT + query);
+            URLConnection yc = restCall.openConnection();
+            BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+            
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                 response.append(inputLine);
+            }
+            in.close();
+                 
+            return response.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
-        in.close();
-             
-        return response.toString();
+    }
+    
+    /**
+     * Search for anime by title
+     * @param title Title of anime
+     * @param limit Max number of results to return
+     * @return
+     */
+    public static TreeMap<Integer, Anime> searchForAnimeByTitle(String title, int limit) {
+        if (limit < 1) {
+            limit = 1;
+        }
+        
+        TreeMap<Integer, Anime> results = new TreeMap<>();
+        Map<Integer, MyAnimeListResult> searchResults = searchByTitleAndType(title, "anime", limit);
+        for (int index : searchResults.keySet()) {
+            results.put(index, getAnime(searchResults.get(index).getId()));
+        }
+        
+        return results;
+    }
+    
+    /**
+     * Search for manga by title
+     * @param title Title of manga
+     * @param limit Max number of results to return
+     * @return
+     */
+    public static TreeMap<Integer, Manga> searchForMangaByTitle(String title, int limit) {
+        if (limit < 1) {
+            limit = 1;
+        }
+        
+        TreeMap<Integer, Manga> results = new TreeMap<>();
+        Map<Integer, MyAnimeListResult> searchResults = searchByTitleAndType(title, "manga", limit);
+        for (int index : searchResults.keySet()) {
+            results.put(index, getManga(searchResults.get(index).getId()));
+        }
+        
+        return results;
+    }
+    
+    /**
+     * Search for anime or manga by title
+     * @param title Title of anime or manga
+     * @param mediaType anime or manga
+     * @param limit Max number of results to return
+     * @return
+     */
+    private static TreeMap<Integer, MyAnimeListResult> searchByTitleAndType(String title, String mediaType, int limit) {
+        TreeMap<Integer, MyAnimeListResult> searchResults = new TreeMap<>();
+        
+        try {
+            String jsonResponse = makeAPICall("/search/" + mediaType + "?q=" + URLEncoder.encode(title, "UTF-8") + "&limit=" + Integer.toString(limit));
+            JSONObject jObj = new JSONObject(jsonResponse);
+            JSONArray jArray = jObj.getJSONArray("results");
+            
+            int malId;
+            String type;
+            JSONObject obj;
+            for (int i = 0; i < jArray.length(); i++) {
+                obj = jArray.getJSONObject(i);
+                malId = obj.getInt("mal_id");
+                type = obj.getString("type");
+                
+                MyAnimeListResult result = new MyAnimeListResult(malId, type);
+                result.setValues(obj);
+                
+                searchResults.put(i + 1, result);
+            }
+            
+            return searchResults;
+            
+        } catch (IOException | JSONException e) {
+            return null;
+        }
     }
 }

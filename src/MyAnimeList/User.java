@@ -1,4 +1,4 @@
-import java.io.IOException;
+package MyAnimeList;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,6 +7,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * User profile on MyAnimeList
+ */
 public class User extends MyAnimeListObject {
     private static Map<String, String> USER_PROPERTY_TYPES = new HashMap<>();
     static {
@@ -26,10 +29,18 @@ public class User extends MyAnimeListObject {
         super(id, USER_PROPERTY_TYPES);
     }
     
+    /**
+     * Get about information of the user
+     * @return About information
+     */
     public String getAbout() {
         return getStringValue("about");
     }
     
+    /**
+     * Gets the list of anime that the user has added to their profile
+     * @return List of anime
+     */
     public ArrayList<Anime> getAnimeList() {
         if (animeList == null) {
             setAnimeList();
@@ -38,18 +49,34 @@ public class User extends MyAnimeListObject {
         return animeList;
     }
     
+    /**
+     * Gets the gender of the user
+     * @return Gender
+     */
     public String getGender() {
         return getStringValue("gender");
     }
     
+    /**
+     * Gets the profile picture url of the user
+     * @return Profile picture url
+     */
     public String getImageUrl() {
         return getStringValue("image_url");
     }
     
+    /**
+     * Gets the location of the user
+     * @return User location
+     */
     public String getLocation() {
         return getStringValue("location");
     }
     
+    /**
+     * Gets the list of manga that the user has added to their profile
+     * @return List of manga
+     */
     public ArrayList<Manga> getMangaList() {
         if (mangaList == null) {
             setMangaList();
@@ -58,10 +85,18 @@ public class User extends MyAnimeListObject {
         return mangaList;
     }
     
+    /**
+     * Gets the url to the user's profile
+     * @return User profile url
+     */
     public String getUrl() {
         return getStringValue("url");
     }
     
+    /**
+     * Gets the user's username
+     * @return Username
+     */
     public String getUsername() {
         return getStringValue("username");
     }
@@ -95,7 +130,7 @@ public class User extends MyAnimeListObject {
             this.animeList = animeList;
             return true;
         }
-        catch (IOException | JSONException e) {
+        catch (JSONException e) {
             return false;
         }
     }
@@ -106,16 +141,10 @@ public class User extends MyAnimeListObject {
      * @return True if update is successful, false if not
      */
     public boolean setDetails(String username) {
-        try {
-            String result = MyAnimeList.makeAPICall("/user/" + username);
-            setValues(result);
-            id = getIntegerValue("user_id");
-            return true;
-        }
-        catch (IOException | JSONException e) {
-            // invalid username
-            return false;
-        }
+        String result = MyAnimeList.makeAPICall("/user/" + username);
+        setValues(result);
+        id = getIntegerValue("user_id");
+        return true;
     }
     
     /**
@@ -147,7 +176,7 @@ public class User extends MyAnimeListObject {
             this.mangaList = mangaList;
             return true;
         }
-        catch (IOException | JSONException e) {
+        catch (JSONException e) {
             return false;
         }
     }
