@@ -24,14 +24,26 @@ public class Review extends MyAnimeListObject {
         super(id, REVIEW_PROPERTY_TYPES);
     }
     
+    /**
+     * Gets the content of the review
+     * @return Review content
+     */
     public String getContent() {
         return getStringValue("content");
     }
     
+    /**
+     * Gets the number of users who found this review helpful
+     * @return Helpful count
+     */
     public int getHelpfulCount() {
         return getIntegerValue("helpful_count");
     }
     
+    /**
+     * Gets the user profile of the reviewer
+     * @return User profile
+     */
     public User getReviewer() {
         if (reviewer == null) {
             setReviewer();
@@ -40,10 +52,18 @@ public class Review extends MyAnimeListObject {
         return reviewer;
     }
     
+    /**
+     * Gets the url to this review
+     * @return Review url
+     */
     public String getUrl() {
         return getStringValue("url"); 
     }
     
+    /**
+     * Updates the reviewer of this review
+     * @return True if reviewer is successfully updated, False if not
+     */
     private boolean setReviewer() {
         JSONObject jObj = getJsonValue("reviewer");
         try {
