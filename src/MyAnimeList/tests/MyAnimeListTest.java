@@ -1,10 +1,15 @@
-package MyAnimeList;
+package MyAnimeList.tests;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Map;
 import java.util.TreeMap;
 
 import org.junit.jupiter.api.Test;
+
+import MyAnimeList.Anime;
+import MyAnimeList.Manga;
+import MyAnimeList.MyAnimeList;
+import MyAnimeList.User;
 
 class MyAnimeListTest {
 
