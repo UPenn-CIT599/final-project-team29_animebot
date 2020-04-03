@@ -1,4 +1,5 @@
 package MyAnimeList;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -19,10 +20,38 @@ public class Manga extends MyAnimeListMedia {
         MANGA_PROPERTY_TYPES.put("volumes", "integer");
     }
     
+    private ArrayList<Manga> prequel, sequel;
     private TreeMap<Integer, Manga> recommendations;
     
     public Manga(int id) {
         super(id, "manga", MANGA_PROPERTY_TYPES);
+    }
+    
+    /**
+     * Gets list of related manga
+     * @param relation Relation to the manga: Prequel or Sequel
+     * @return List of related manga for relation
+     */
+    private ArrayList<Manga> findRelatedManga(String relation) {
+        ArrayList<Manga> relatedManga = new ArrayList<>();
+        if (!getRelated().has(relation)) {
+            return relatedManga;
+        }
+        
+        try {
+            JSONArray jArray = getRelated().getJSONArray(relation);
+            
+            for (int i = 0; i < jArray.length(); i++) {
+                relatedManga.add(MyAnimeList.getManga(getRelated().getJSONArray(relation).getJSONObject(i)));
+            }
+            
+            return relatedManga;
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        return relatedManga;
     }
    
     /**
@@ -31,6 +60,18 @@ public class Manga extends MyAnimeListMedia {
      */
     public int getChapters() {
         return getIntegerValue("chapters");
+    }
+    
+    /**
+     * Gets list of prequels for this manga
+     * @return List of prequels
+     */
+    public ArrayList<Manga> getPrequel() {
+        if (prequel == null) {
+            prequel = findRelatedManga("Prequel");
+        }
+        
+        return prequel;
     }
     
     /**
@@ -51,6 +92,18 @@ public class Manga extends MyAnimeListMedia {
      */
     public int getScoredBy() {
         return getIntegerValue("scored_by");
+    }
+    
+    /**
+     * Gets list of sequels for this manga
+     * @return List of sequels
+     */
+    public ArrayList<Manga> getSequel() {
+        if (sequel == null) {
+            sequel = findRelatedManga("Sequel");
+        }
+        
+        return sequel;
     }
     
     /**
