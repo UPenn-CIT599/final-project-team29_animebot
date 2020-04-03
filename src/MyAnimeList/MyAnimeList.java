@@ -17,10 +17,6 @@ import org.json.JSONObject;
  */
 public class MyAnimeList {
     private static String ENDPOINT = "https://api.jikan.moe/v3"; 
-    
-    private static String[] ANIME_TOP_CATEGORIES = new String[]{"airing","upcoming","tv","movie","ova","special","bypopularity","favorite"};
-    private static String[] MANGA_TOP_CATEGORIES = new String[]{"manga","novels","oneshots","doujin","manhwa","manhua","bypopularity","favorite"};
-
     private static Map<Integer, Anime> animeList = new HashMap<>();
     private static Map<Integer, Manga> mangaList = new HashMap<>();
     private static Map<String, User> userList = new HashMap<>();
@@ -121,11 +117,12 @@ public class MyAnimeList {
      * @return Top 50 anime in the category, ordered by rank
      */
     public static TreeMap<Integer, Anime> getTopAnime(String category) {
-        String categoryStr = category;
-        if (categoryStr == null || !isValueInArray(categoryStr, ANIME_TOP_CATEGORIES)) {
-            categoryStr = "";
+        String categoryStr;
+        if (category == null || category.isEmpty()) {
+            category = "bypopularity";
         }
         
+        categoryStr = AnimeTopCategory.valueOf(category.toLowerCase()).toString();
         TreeMap<Integer, Anime> topAnime = new TreeMap<>();
         
         try {
@@ -167,11 +164,12 @@ public class MyAnimeList {
      * @return Top 50 manga in category, ordered by rank
      */
     public static TreeMap<Integer, Manga> getTopManga(String category) {
-        String categoryStr = category;
-        if (categoryStr == null || !isValueInArray(categoryStr, MANGA_TOP_CATEGORIES)) {
-            categoryStr = "bypopularity";
+        String categoryStr;
+        if (category == null || category.isEmpty()) {
+            category = "bypopularity";
         }
         
+        categoryStr = MangaTopCategory.valueOf(category.toLowerCase()).toString();
         TreeMap<Integer, Manga> topManga = new TreeMap<>();
         
         try {
@@ -227,22 +225,6 @@ public class MyAnimeList {
             // invalid id
             return null;
         }
-    }
-    
-    /**
-     * Checks if a value is in the array, case insensitive 
-     * @param value Value to look for in array
-     * @param array Array of values
-     * @return True if value is in the array, False if not
-     */
-    private static boolean isValueInArray(String value, String[] array) {
-        for (String val : array) {
-            if (value.equalsIgnoreCase(val)) {
-                return true;
-            }
-        }
-        
-        return false;
     }
     
     /**
