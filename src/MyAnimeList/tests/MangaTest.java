@@ -1,8 +1,11 @@
-package MyAnimeList;
+package MyAnimeList.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+
+import MyAnimeList.Manga;
+import MyAnimeList.MyAnimeList;
 
 class MangaTest {
 

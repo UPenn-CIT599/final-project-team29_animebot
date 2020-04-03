@@ -12,6 +12,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import MyAnimeList.enums.AnimeTopCategory;
+import MyAnimeList.enums.MangaTopCategory;
+
 /**
  * Use this class to interact with MyAnimeList
  */

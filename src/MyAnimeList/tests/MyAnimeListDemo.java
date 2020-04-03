@@ -1,6 +1,15 @@
-package MyAnimeList;
+package MyAnimeList.tests;
 import java.util.ArrayList;
 import java.util.Map;
+
+import MyAnimeList.Anime;
+import MyAnimeList.AnimeEpisode;
+import MyAnimeList.Manga;
+import MyAnimeList.MyAnimeList;
+import MyAnimeList.MyAnimeListMedia;
+import MyAnimeList.News;
+import MyAnimeList.Review;
+import MyAnimeList.User;
 
 /**
  * Demo class to be removed prior to submission of the project
