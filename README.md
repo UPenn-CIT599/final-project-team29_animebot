@@ -8,15 +8,15 @@ Team 29 - Slack Anime Bot
 2. Open the anime-bot project in Eclipse
 3. Right-click the jbot project and select Run As > Maven Install
 
-![jbot Maven Install](images/readme-jbot-install.png)
+![jbot Maven Install](images/readme-jbot-install.PNG)
 
 4. Right-click on the animebot project module and select Run As > Maven Build...
 
-![animebot Maven Build](images/readme-animebot-build.png)
+![animebot Maven Build](images/readme-animebot-build.PNG)
 
 5. Under Goals, enter 'spring-boot:run' and click Run
 
-![animebot Maven Run Configuration](images/readme-animebot-build-goals.png)
+![animebot Maven Run Configuration](images/readme-animebot-build-goals.PNG)
 
 6. Log into the Slack Workspace: https://591finalproject.slack.com
 7. Navigate to the bot channel
