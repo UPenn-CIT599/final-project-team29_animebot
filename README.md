@@ -64,9 +64,8 @@ Follow these instructions to quickly get the animebot up and running:
 <details>
 <summary>Slack Workspace Credentials</summary>
 
-__Username:__ mcit591.team29@gmail.com
-
-__Password:__ mcit591!
+Username: mcit591.team29@gmail.com
+Password: mcit591!
 
 </details>
 
