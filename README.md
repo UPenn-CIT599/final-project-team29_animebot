@@ -51,6 +51,8 @@ Below is a list of commands you can use to interact with our animebot:
 * get manga
 * get top anime
 * get top manga
+* anime search
+* manga search
 
 ---
 ## Technical Specifications
