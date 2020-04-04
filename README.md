@@ -23,22 +23,52 @@ Yes, we do Manga too!
 
 ---
 ## Quick-Start Guide
+Here in case you need it
+### Software Prerequisites
+* Eclipse
+* JRE Library
+* JUnit Library
+* M2Eclipse
+* Git
+
+### Getting Started
 Follow these instructions to quickly get the animebot up and running:
 1. Clone this project: `git clone https://github.com/UPenn-CIT599/final-project-team29_animebot.git anime-bot`
-2. Open the anime-bot project in Eclipse
-3. Right-click the jbot project and select Run As > Maven Install
+2. Open the anime-bot project in Eclipse. It should import three projects: the parent (jbot) and two nested modules (anime-bot_jbot and animbebot)
+3. Right-click the jbot project and select Run As > Maven install
+<details>
+<summary>Click here: Maven install</summary>
 
 ![jbot Maven Install](images/readme-jbot-install.PNG)
 
-4. Right-click on the animebot project module and select Run As > Maven Build...
+</details>
+
+4. Right-click on the animebot project module and select Run As > Maven build...
+<details>
+<summary>Click here: Maven build</summary>
 
 ![animebot Maven Build](images/readme-animebot-build.PNG)
 
-5. Under Goals, enter 'spring-boot:run' and click Run
+</details>
+
+5. Under Goals, enter `spring-boot:run` and click Run
+<details>
+<summary>Click here: Edit Configuration</summary>
 
 ![animebot Maven Run Configuration](images/readme-animebot-build-goals.PNG)
 
+</details>
+
 6. Login to the Slack Workspace: https://591finalproject.slack.com
+
+<details>
+<summary>Click here: Slack Workspace Credentials</summary>
+
+__Username:__ `mcit591.team29@gmail.com` 
+__Password:__ `mcit591!`
+
+</details>
+
 7. Navigate to the bot channel
 8. You're now ready to talk with our animebot!
 
@@ -60,7 +90,7 @@ How this all works.
 ### Overview
 Our Slack Anime Bot is based on the [JBot Framework](https://github.com/rampatra/jbot)
 
-The JBot Framework code is contained in the jbot project folder. Everything outside of this folder was written by Team 29
+The JBot Framework code is contained in the jbot project folder. Team 29 is responsible for all code in the animebot module
 
 We leverage the [Jikan API](https://jikan.moe/) to fetch information from MyAnimeList.net
 
@@ -68,4 +98,11 @@ We leverage the [Jikan API](https://jikan.moe/) to fetch information from MyAnim
 ## Known Issues
 Unfortunately, things don't always go according to plan. Fortunately, we know what to do
 ### Installation
-* You may need to remove and re-add the JUnit Library to the animebot project Build Path for the code to compile
+<details>
+<summary>I don't see three projects when I open the local repository in Eclipse</summary>
+Try deleting the local repository and re-cloning it from GitHub
+</details>
+<details>
+<summary>Maven install or Maven build fails when compiling the JUnit tests</summary>
+You may need to remove and re-add the JUnit Library to the animebot project Build Path for the code to compile
+</details>

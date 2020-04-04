@@ -11,8 +11,8 @@
     <artifactId>animebot</artifactId>
     <packaging>jar</packaging>
 
-    <name>JBot Example</name>
-    <description>A sample Slack/Facebook bot using JBot.</description>
+    <name>Slack Anime Bot</name>
+    <description>Just a simple Slackbot that knows everything you want to know about Anime and Manga.</description>
     
     <dependencies>
         <dependency>
