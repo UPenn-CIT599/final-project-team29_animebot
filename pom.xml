@@ -20,7 +20,7 @@
 
     <modules>
         <module>jbot</module>
-        <module>jbot-example</module>
+        <module>animebot</module>
     </modules>
 
     <developers>
