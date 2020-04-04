@@ -38,27 +38,35 @@ Follow these instructions to quickly get the animebot up and running:
 3. Right-click the jbot project and select Run As > Maven install
 <details>
 <summary>Maven install</summary>
+
 ![jbot Maven Install](images/readme-jbot-install.PNG)
+
 </details>
 
 4. Right-click on the animebot project module and select Run As > Maven build...
 <details>
 <summary>Maven build</summary>
+
 ![animebot Maven Build](images/readme-animebot-build.PNG)
+
 </details>
 
 5. Under Goals, enter 'spring-boot:run' and click Run
 <details>
 <summary>Maven configuration</summary>
+
 ![animebot Maven Run Configuration](images/readme-animebot-build-goals.PNG)
+
 </details>
 
 6. Login to the Slack Workspace: https://591finalproject.slack.com
 
 <details>
 <summary>Slack Workspace Credentials</summary>
+
 __Username:__ mcit591.team29@gmail.com
 __Password:__ mcit591!
+
 </details>
 
 7. Navigate to the bot channel
