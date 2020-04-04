@@ -51,7 +51,7 @@ Follow these instructions to quickly get the animebot up and running:
 
 </details>
 
-5. Under Goals, enter 'spring-boot:run' and click Run
+5. Under Goals, enter `spring-boot:run` and click Run
 <details>
 <summary>Click here: Edit Configuration</summary>
 
