@@ -8,7 +8,7 @@ Bringing joy to Otaku everywhere since 2020
 ## Introduction
 Who, what, where, and why (see Technical Specifications below for how)
 ### Who is Team 29
-Team 29 is a group of three intellegient, enthusiastic students who are taking MCIT 591 during Spring 2020 at the prestigious University of Pennsylvania
+Team 29 is a group of three intelligent, enthusiastic students who are taking MCIT 591 during Spring 2020 at the prestigious University of Pennsylvania
 
 [Andrea Mackie](https://github.com/andreamackie13)
 
