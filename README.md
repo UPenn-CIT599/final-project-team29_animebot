@@ -1,6 +1,7 @@
 ---
 # MCIT 591 Final Project
 Team 29 - Slack Anime Bot
+
 ---
 ## Quick-Start Guide
 Follow these instructions to quickly get the animebot up and running:
@@ -21,6 +22,7 @@ Follow these instructions to quickly get the animebot up and running:
 6. Log into the Slack Workspace: https://591finalproject.slack.com
 7. Navigate to the bot channel
 8. You're now ready to talk with our animebot!
+
 ---
 ## How to Interact
 Now that the Slack Anime Bot is up and running, try talking to it!
@@ -30,6 +32,7 @@ Below is a list of commands you can use to interact with our animebot:
 * get manga
 * get top anime
 * get top manga
+
 ---
 ## Technical Specifications
 How this all works.
@@ -38,6 +41,7 @@ Our Slack Anime Bot is based on the [JBot Framework](https://github.com/rampatra
 All JBot Framework code is contained in the jbot project folder
 
 We leverage the [Jikan API](https://jikan.moe/) to fetch information from MyAnimeList.net
+
 ---
 ## Known Issues
 Unfortunately, things don't always go according to plan. Fortunately, we know what to do.
