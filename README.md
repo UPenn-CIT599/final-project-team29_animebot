@@ -2,16 +2,18 @@
 # MCIT 591 Final Project
 __Team 29 - Slack Anime Bot__
 
-Bringing joy to Otaku everywhere since 2020.
+Bringing joy to Otaku everywhere since 2020
 
 ---
 ## Introduction
-Who, what, where, and why (see Technical Specifications for how).
+Who, what, where, and why (see Technical Specifications below for how)
 ### Who is Team 29
 Team 29 is a group of three intellegient, enthusiastic students who are taking MCIT 591 during Spring 2020 at the prestigious University of Pennsylvania
 
 [Andrea Mackie](https://github.com/andreamackie13)
+
 [Brian Chan](https://github.com/chan-b)
+
 [Gulcin Ennis](https://github.com/G-Ennis)
 
 ### Why Anime
@@ -62,6 +64,6 @@ We leverage the [Jikan API](https://jikan.moe/) to fetch information from MyAnim
 
 ---
 ## Known Issues
-Unfortunately, things don't always go according to plan. Fortunately, we know what to do.
+Unfortunately, things don't always go according to plan. Fortunately, we know what to do
 ### Installation
 * You may need to remove and re-add the JUnit Library to the animebot project Build Path for the code to compile
