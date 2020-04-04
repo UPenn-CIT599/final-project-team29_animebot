@@ -1,6 +1,8 @@
 ---
 # MCIT 591 Final Project
-Team 29 - Slack Anime Bot
+__Team 29 - Slack Anime Bot__
+
+Bringing joy to Otaku everywhere since 2020.
 
 ---
 ## Quick-Start Guide
@@ -19,7 +21,7 @@ Follow these instructions to quickly get the animebot up and running:
 
 ![animebot Maven Run Configuration](images/readme-animebot-build-goals.PNG)
 
-6. Log into the Slack Workspace: https://591finalproject.slack.com
+6. Login to the Slack Workspace: https://591finalproject.slack.com
 7. Navigate to the bot channel
 8. You're now ready to talk with our animebot!
 
