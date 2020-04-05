@@ -2,6 +2,8 @@
 # MCIT 591 Final Project
 __Team 29 - Slack Anime Bot__
 
+![bot](images/bot.png)
+
 Bringing joy to Otaku everywhere since 2020
 
 ---
@@ -88,11 +90,15 @@ Below is a list of commands you can use to interact with our animebot:
 ## Technical Specifications
 How this all works.
 ### Overview
-Our Slack Anime Bot is based on the [JBot Framework](https://github.com/rampatra/jbot)
+Our Slack Anime Bot is based on the [JBot Framework](https://github.com/rampatra/jbot) <br /> 
+JBot is an event driven, Java framework that is available with all the boilerplate code which handles the underlying WebSocket connections and other complexities <br /> 
+Bots interact with Slack through WebSockets, specifically the RTM API <br /> 
+The JBot Framework code is contained in the jbot project folder. Team 29 is responsible for all code in the animebot module <br /> 
 
-The JBot Framework code is contained in the jbot project folder. Team 29 is responsible for all code in the animebot module
+We leverage the [Jikan API](https://jikan.moe/) to fetch information from MyAnimeList.net <br /> 
+Jikan is an unofficial MyAnimeList API. It uses an open-source PHP & REST API for the “most active online anime + manga 
+community and database” — MyAnimeList. It parses the website to satisfy the need for an API
 
-We leverage the [Jikan API](https://jikan.moe/) to fetch information from MyAnimeList.net
 
 ---
 ## Known Issues
