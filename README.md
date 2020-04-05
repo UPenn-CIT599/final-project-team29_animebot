@@ -99,6 +99,10 @@ We leverage the [Jikan API](https://jikan.moe/) to fetch information from MyAnim
 Jikan is an unofficial MyAnimeList API. It uses an open-source PHP & REST API for the “most active online anime + manga 
 community and database” — MyAnimeList. It parses the website to satisfy the need for an API
 
+In general, an Application Program Interface (API) is a set of routines, protocols, and tools for building software applications. 
+An API specifies how software components should interact. In simple terms, it is a software intermediary that allows two applications to talk to each other. 
+Google Maps, Twitter, YouTube and Flickr have some of the most popular APIs. 
+
 
 ---
 ## Known Issues
