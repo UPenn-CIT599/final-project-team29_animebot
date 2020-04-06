@@ -2,6 +2,8 @@
 # MCIT 591 Final Project
 __Team 29 - Slack Anime Bot__
 
+![bot](images/bot.png)
+
 Bringing joy to Otaku everywhere since 2020
 
 ---
@@ -34,7 +36,7 @@ Here in case you need it
 ### Getting Started
 Follow these instructions to quickly get the animebot up and running:
 1. Clone this project: `git clone https://github.com/UPenn-CIT599/final-project-team29_animebot.git anime-bot`
-2. Open the anime-bot project in Eclipse. It should import three projects: the parent (jbot) and two nested modules (anime-bot_jbot and animbebot)
+2. Open the anime-bot project in Eclipse. It should import three projects: the parent (jbot) and two nested modules (anime-bot_jbot and animebot)
 3. Right-click the jbot project and select Run As > Maven install
 <details>
 <summary>Click here: Maven install</summary>
@@ -88,11 +90,19 @@ Below is a list of commands you can use to interact with our animebot:
 ## Technical Specifications
 How this all works.
 ### Overview
-Our Slack Anime Bot is based on the [JBot Framework](https://github.com/rampatra/jbot)
+Our Slack Anime Bot is based on the [JBot Framework](https://github.com/rampatra/jbot) <br /> 
+JBot is an event driven, Java framework that is available with all the boilerplate code which handles the underlying WebSocket connections and other complexities <br /> 
+Bots interact with Slack through WebSockets, specifically the RTM API <br /> 
+The JBot Framework code is contained in the jbot project folder. Team 29 is responsible for all code in the animebot module <br /> 
 
-The JBot Framework code is contained in the jbot project folder. Team 29 is responsible for all code in the animebot module
+We leverage the [Jikan API](https://jikan.moe/) to fetch information from MyAnimeList.net <br /> 
+Jikan is an unofficial MyAnimeList API. It uses an open-source PHP & REST API for the “most active online anime + manga 
+community and database” — MyAnimeList. It parses the website to satisfy the need for an API
 
-We leverage the [Jikan API](https://jikan.moe/) to fetch information from MyAnimeList.net
+In general, an Application Program Interface (API) is a set of routines, protocols, and tools for building software applications. 
+An API specifies how software components should interact. In simple terms, it is a software intermediary that allows two applications to talk to each other. 
+Google Maps, Twitter, YouTube and Flickr have some of the most popular APIs. 
+
 
 ---
 ## Known Issues
