@@ -32,7 +32,7 @@ public class SlackBot extends Bot {
     private static final Logger logger = LoggerFactory.getLogger(SlackBot.class);
 
     /**
-     * Slack token from application.properties file. 
+     * Slack token from application.properties file
      */
     @Value("${slackBotToken}")
     private String slackToken;
@@ -47,15 +47,15 @@ public class SlackBot extends Bot {
         return this;
     }
 
-    /**
-     * Invoked when the bot receives a direct mention (@botname: message)
-     * or a direct message.
-     *
-     * @param session
-     * @param event
-     */
-    @Controller(events = {EventType.DIRECT_MENTION, EventType.DIRECT_MESSAGE})
-    public void onReceiveDM(WebSocketSession session, Event event) {
+	/**
+	 * User can @ anime bot or direct message. The events are in an enum class
+	 * defined by the JBot framework.
+	 * 
+	 * @param session
+	 * @param event
+	 */
+	@Controller(events = { EventType.DIRECT_MENTION, EventType.DIRECT_MESSAGE })
+	public void onReceiveDM(WebSocketSession session, Event event) {
     	reply(session, event, "Hi, I am " + slackService.getCurrentUser().getName()
 				+ ". Please ask me aime related questions! Here are some commands you can use: get top manga, get top anime, anime search.");
 		
@@ -102,6 +102,17 @@ public class SlackBot extends Bot {
     }
     
     
+	/**
+	 * The below method is the start of a conversation with a bot, the pattern
+	 * search looks for the user asking to "anime search" aka, search the DB of
+	 * anime, and then moves on to the next method. The methods know to interact
+	 * with each other due to the "next" field containing the name of the next
+	 * method that follows. For example next = "whatAnime" search for the method
+	 * named "whatAnime" to continue the conversation
+	 * 
+	 * @param session
+	 * @param event
+	 */
     @Controller(pattern = "anime search", next = "whatAnime")
     public void searchForAnimeByTitle(WebSocketSession session, Event event) {
     	startConversation(event, "whatAnime");
@@ -122,7 +133,11 @@ public class SlackBot extends Bot {
     }
     
     
-    
+    /**
+     * Conversation starter for manga search, follows same rules above as anime search
+     * @param session
+     * @param event
+     */
     @Controller(pattern = "manga search", next = "whatManga")
     public void searchForMangaByTitle(WebSocketSession session, Event event) {
     	startConversation(event, "whatManga");
