@@ -36,7 +36,7 @@ Here in case you need it
 ### Getting Started
 Follow these instructions to quickly get the animebot up and running:
 1. Clone this project: `git clone https://github.com/UPenn-CIT599/final-project-team29_animebot.git anime-bot`
-2. Open the anime-bot project in Eclipse. It should import three projects: the parent (jbot) and two nested modules (anime-bot_jbot and animbebot)
+2. Open the anime-bot project in Eclipse. It should import three projects: the parent (jbot) and two nested modules (anime-bot_jbot and animebot)
 3. Right-click the jbot project and select Run As > Maven install
 <details>
 <summary>Click here: Maven install</summary>
