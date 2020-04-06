@@ -20,6 +20,11 @@ import myanimelist.Anime;
 import myanimelist.Manga;
 import myanimelist.MyAnimeList;
 
+/**
+ * The below methods follow the JBot framework guidelines such as using @Controller to
+ * control what the bot looks for/says
+ *
+ */
 @JBot
 @Profile("slack")
 public class SlackBot extends Bot {
@@ -27,8 +32,7 @@ public class SlackBot extends Bot {
     private static final Logger logger = LoggerFactory.getLogger(SlackBot.class);
 
     /**
-     * Slack token from application.properties file. You can get your slack token
-     * next <a href="https://my.slack.com/services/new/bot">creating a new bot</a>.
+     * Slack token from application.properties file. 
      */
     @Value("${slackBotToken}")
     private String slackToken;
@@ -65,7 +69,12 @@ public class SlackBot extends Bot {
 		stopConversation(event);
 	}
 	**/
-
+    
+    /**
+     * Bot looks for user saying key words or "patterns". The below method returns top manga based on MyAnimeList rating
+     * @param session
+     * @param event
+     */
 	@Controller(pattern = "get top manga")
 	public void getTopManga(WebSocketSession session, Event event) {
 		Map<Integer, Manga> topManga = MyAnimeList.getTopManga(null);
@@ -76,6 +85,12 @@ public class SlackBot extends Bot {
         reply(session, event, "The top manga are: \r\n\r\n" + msg.toString());
     }
     
+	
+	/**
+	 * The below has the same functionality as getting top manga, but it returns top anime instead
+	 * @param session
+	 * @param event
+	 */
     @Controller(pattern = "get top anime")
     public void getTopAnime(WebSocketSession session, Event event) {
         Map<Integer, Anime> topAnime = MyAnimeList.getTopAnime("TV");
@@ -126,11 +141,7 @@ public class SlackBot extends Bot {
          reply(session, event, "The manga are: \r\n\r\n" + msg.toString());
          stopConversation(event);
     }
-    
-    
-
-   
-    
+       
      
 
 }
