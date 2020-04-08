@@ -49,7 +49,7 @@ Follow these instructions to quickly get the animebot up and running:
 <details>
 <summary>Click here: Maven build</summary>
 
-![animebot Maven Build](images/readme-animebot-clean.PNG)
+![animebot Maven Clean](images/readme-animebot-clean.PNG)
 
 </details>
 
