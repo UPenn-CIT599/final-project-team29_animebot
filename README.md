@@ -37,15 +37,8 @@ Here in case you need it
 Follow these instructions to quickly get the animebot up and running:
 1. Clone this project: `git clone https://github.com/UPenn-CIT599/final-project-team29_animebot.git anime-bot`
 2. Open the anime-bot project in Eclipse. It should import three projects: the parent (jbot) and two nested modules (anime-bot_jbot and animebot)
-3. Right-click the jbot project and select Run As > Maven install
-<details>
-<summary>Click here: Maven install</summary>
 
-![jbot Maven Install](images/readme-jbot-install.PNG)
-
-</details>
-
-4. Right-click on the animebot project module and select Run As > Maven clean
+3. Right-click on the animebot project module and select Run As > Maven clean
 <details>
 <summary>Click here: Maven Clean</summary>
 
@@ -53,7 +46,7 @@ Follow these instructions to quickly get the animebot up and running:
 
 </details>
 
-5. Right-click on the animebot project module and select Run As > Maven build...
+4. Right-click on the animebot project module and select Run As > Maven build...
 <details>
 <summary>Click here: Maven build</summary>
 
@@ -61,7 +54,7 @@ Follow these instructions to quickly get the animebot up and running:
 
 </details>
 
-6. Under Goals, enter `spring-boot:run` and click Run
+5. Under Goals, enter `spring-boot:run` and click Run
 <details>
 <summary>Click here: Edit Configuration</summary>
 
@@ -69,7 +62,7 @@ Follow these instructions to quickly get the animebot up and running:
 
 </details>
 
-7. Login to the Slack Workspace: https://591finalproject.slack.com
+6. Login to the Slack Workspace: https://591finalproject.slack.com
 
 <details>
 <summary>Click here: Slack Workspace Credentials</summary>
