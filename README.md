@@ -45,7 +45,7 @@ Follow these instructions to quickly get the animebot up and running:
 
 </details>
 
-4. Right-click on the animebot project module and select Run As > Maven build...
+4. Right-click on the animebot project module and select Run As > Maven clean
 <details>
 <summary>Click here: Maven build</summary>
 
@@ -53,7 +53,15 @@ Follow these instructions to quickly get the animebot up and running:
 
 </details>
 
-5. Under Goals, enter `spring-boot:run` and click Run
+5. Right-click on the animebot project module and select Run As > Maven build...
+<details>
+<summary>Click here: Maven build</summary>
+
+![animebot Maven Build](images/readme-animebot-build.PNG)
+
+</details>
+
+6. Under Goals, enter `spring-boot:run` and click Run
 <details>
 <summary>Click here: Edit Configuration</summary>
 
@@ -61,7 +69,7 @@ Follow these instructions to quickly get the animebot up and running:
 
 </details>
 
-6. Login to the Slack Workspace: https://591finalproject.slack.com
+7. Login to the Slack Workspace: https://591finalproject.slack.com
 
 <details>
 <summary>Click here: Slack Workspace Credentials</summary>
@@ -96,8 +104,8 @@ Bots interact with Slack through WebSockets, specifically the RTM API <br />
 The JBot Framework code is contained in the jbot project folder. Team 29 is responsible for all code in the animebot module <br /> 
 
 We leverage the [Jikan API](https://jikan.moe/) to fetch information from MyAnimeList.net <br /> 
-Jikan is an unofficial MyAnimeList API. It uses an open-source PHP & REST API for the ìmost active online anime + manga 
-community and databaseî ó MyAnimeList. It parses the website to satisfy the need for an API
+Jikan is an unofficial MyAnimeList API. It uses an open-source PHP & REST API for the ‚Äúmost active online anime + manga 
+community and database‚Äù ‚Äî MyAnimeList. It parses the website to satisfy the need for an API
 
 In general, an Application Program Interface (API) is a set of routines, protocols, and tools for building software applications. 
 An API specifies how software components should interact. In simple terms, it is a software intermediary that allows two applications to talk to each other. 
