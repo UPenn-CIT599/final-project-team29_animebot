@@ -1,15 +1,9 @@
-package myanimelist.tests;
+package myanimelist;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 import java.util.TreeMap;
-
-import org.junit.jupiter.api.Test;
-
-import myanimelist.Anime;
-import myanimelist.Manga;
-import myanimelist.MyAnimeList;
-import myanimelist.User;
 
 class MyAnimeListTest {
 
@@ -17,41 +11,43 @@ class MyAnimeListTest {
     void testGetAnime() {
         int animeId = 21;
         Anime anime = MyAnimeList.getAnime(animeId);
-        assertEquals(anime.getEnglishTitle(), "One Piece");
+        assertEquals("One Piece", anime.getEnglishTitle());
     }
     
     @Test
     void testGetUser() {
         String username = "Maxine";
         User user = MyAnimeList.getUser(username);
-        assertEquals(user.getLocation(), "Baltimore, Maryland");
+        assertEquals("Baltimore, Maryland", user.getLocation());
     }
 
     @Test
     void testGetTopAnime() {
+        // subject to change
         String topCategory = "TV";
         Map<Integer, Anime> topAnime = MyAnimeList.getTopAnime(topCategory);
-        assertEquals(topAnime.get(9).getTitle(), "Gintama");
+        assertEquals("Gintama.", topAnime.get(9).getTitle());
     }
        
     @Test
     void testGetTopManga() {
+        // subject to change
         String topCategory = "oneshots";
         Map<Integer, Manga> topManga = MyAnimeList.getTopManga(topCategory);
-        assertEquals(topManga.get(4).getTitle(), "Tokidoki");
+        assertEquals("Tokidoki", topManga.get(4).getTitle());
     }
 
     @Test
     void testSearchForAnimeByTitle() {
         String title = "Toaru Majutsu no Kinsho Mokuroku";
         TreeMap<Integer, Anime> results = MyAnimeList.searchForAnimeByTitle(title, 1);
-        assertEquals(results.get(1).getEnglishTitle(), "A Certain Magical Index");
+        assertEquals("A Certain Magical Index", results.get(1).getEnglishTitle());
     }
     
     @Test
     void testSearchForMangaByTitle() {
         String title = "The Ghost in the Shell";
         TreeMap<Integer, Manga> results = MyAnimeList.searchForMangaByTitle(title, 1);
-        assertEquals(results.get(1).getScore(), 8.11);
+        assertEquals(8.11, results.get(1).getScore());
     }
 }
