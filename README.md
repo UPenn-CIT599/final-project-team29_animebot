@@ -47,7 +47,7 @@ Follow these instructions to quickly get the animebot up and running:
 
 4. Right-click on the animebot project module and select Run As > Maven clean
 <details>
-<summary>Click here: Maven build</summary>
+<summary>Click here: Maven Clean</summary>
 
 ![animebot Maven Clean](images/readme-animebot-clean.PNG)
 
