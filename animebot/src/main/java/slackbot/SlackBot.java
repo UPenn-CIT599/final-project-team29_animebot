@@ -5,6 +5,8 @@ import me.ramswaroop.jbot.core.common.EventType;
 import me.ramswaroop.jbot.core.common.JBot;
 import me.ramswaroop.jbot.core.slack.Bot;
 import me.ramswaroop.jbot.core.slack.models.Event;
+import me.ramswaroop.jbot.core.slack.models.Message;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,11 +16,13 @@ import org.springframework.web.socket.WebSocketSession;
 //import example.jbot.slack.SlackBot;
 
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.TreeMap;
 
 import myanimelist.Anime;
 import myanimelist.Manga;
 import myanimelist.MyAnimeList;
+import myanimelist.enums.AnimeTopCategory;
 
 /**
  * The below methods follow the JBot framework guidelines such as using @Controller to
@@ -54,7 +58,7 @@ public class SlackBot extends Bot {
 	 * @param session
 	 * @param event
 	 */
-	@Controller(events = { EventType.DIRECT_MENTION, EventType.DIRECT_MESSAGE })
+	@Controller(events = { EventType.DIRECT_MENTION, EventType.DIRECT_MESSAGE, EventType.MEMBER_JOINED_CHANNEL })
 	public void onReceiveDM(WebSocketSession session, Event event) {
     	reply(session, event, "Hi, I am " + slackService.getCurrentUser().getName()
 				+ ". Please ask me aime related questions! Here are some commands you can use: get top manga, get top anime, anime search.");
@@ -75,14 +79,47 @@ public class SlackBot extends Bot {
      * @param session
      * @param event
      */
-	@Controller(pattern = "get top manga")
-	public void getTopManga(WebSocketSession session, Event event) {
-		Map<Integer, Manga> topManga = MyAnimeList.getTopManga(null);
-		StringBuilder msg = new StringBuilder();
-		for (int rank : topManga.keySet()) {
-            msg.append(rank + ": " + topManga.get(rank).getTitle() + "\r\n");
+	@Controller(pattern = "^(get top)\\s*(\\d*)\\s*(favorite)*\\s*(novels|oneshots|manga|doujin|manhwa|manhua)\\s*(bypopularity)*$")
+	public void getTopManga(WebSocketSession session, Event event, Matcher matcher) {
+	    // Number of results to return
+        int topN = 50;
+        String numReturn = matcher.group(2);
+        if (numReturn != null && !numReturn.isEmpty()) {
+            topN = Integer.parseInt(numReturn);
+            if (topN < 1) {
+                topN = 1;
+            }
         }
-        reply(session, event, "The top manga are: \r\n\r\n" + msg.toString());
+        
+        // Category
+        String category = matcher.group(4);
+        String category1 = matcher.group(3);
+        String category2 = matcher.group(5);
+        
+        if (category.equalsIgnoreCase("manga")) {
+            if (category1 != null && !category1.isEmpty()) {
+                category = category1;
+            }
+            else if (category2 != null && !category2.isEmpty()) {
+                category = category2;
+            }
+        }
+        
+        Map<Integer, Manga> topManga = MyAnimeList.getTopManga(category);
+        StringBuilder msgSB = new StringBuilder();
+        msgSB.append("The top " + topN + " " + category + " are: \r\n\r\n");
+
+		for (int rank : topManga.keySet()) {
+		    Manga rankedManga = topManga.get(rank);
+		    msgSB.append(rank + ". <" + rankedManga.getUrl() + "|" + rankedManga.getTitle() + ">\r\n");
+            if (rank == topN) {
+                break;
+            }
+        }
+
+		Message msg = new Message(msgSB.toString());
+        msg.setMrkdwn(true);
+        reply(session, event, msg);
     }
     
 	
@@ -91,14 +128,49 @@ public class SlackBot extends Bot {
 	 * @param session
 	 * @param event
 	 */
-    @Controller(pattern = "get top anime")
-    public void getTopAnime(WebSocketSession session, Event event) {
-        Map<Integer, Anime> topAnime = MyAnimeList.getTopAnime("TV");
-        StringBuilder msg = new StringBuilder();
-        for (int rank : topAnime.keySet()) {
-            msg.append(rank + ": " + topAnime.get(rank).getTitle() + "\r\n");
+    @Controller(pattern = "^(get top)\\s*(\\d*)\\s*(airing|favorite|upcoming)*\\s*(anime|tv|movie|ova|special)\\s*(bypopularity)*$")
+    public void getTopAnime(WebSocketSession session, Event event, Matcher matcher) {
+        // Number of results to return
+        int topN = 50;
+        String numReturn = matcher.group(2);
+        if (numReturn != null && !numReturn.isEmpty()) {
+            topN = Integer.parseInt(numReturn);
+            if (topN < 1) {
+                topN = 1;
+            }
         }
-        reply(session, event, "The top anime are: \r\n\r\n" + msg.toString());
+        
+        // Category
+        String category = matcher.group(4);
+        String category1 = matcher.group(3);
+        String category2 = matcher.group(5);
+        
+        if (category.equalsIgnoreCase("anime")) {
+            if (category1 != null && !category1.isEmpty()) {
+                category = category1;
+            }
+            else if (category2 != null && !category2.isEmpty()) {
+                category = category2;
+            }
+            else {
+                category = "bypopularity";
+            }
+        }
+        
+        Map<Integer, Anime> topAnime = MyAnimeList.getTopAnime(category);
+        StringBuilder msgSB = new StringBuilder();
+        msgSB.append("The top " + topN + " " + category + " are: \r\n\r\n");
+        for (int rank : topAnime.keySet()) {
+            Anime rankedAnime = topAnime.get(rank);
+            msgSB.append(rank + ". <" + rankedAnime.getUrl() + "|" + rankedAnime.getTitle() + ">\r\n");
+            if (rank == topN) {
+                break;
+            }
+        }
+        
+        Message msg = new Message(msgSB.toString());
+        msg.setMrkdwn(true);
+        reply(session, event, msg);
     }
     
     

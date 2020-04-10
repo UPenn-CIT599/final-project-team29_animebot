@@ -171,7 +171,9 @@ public abstract class Bot extends BaseBot {
             if (StringUtils.isEmpty(reply.getType())) {
                 reply.setType(EventType.MESSAGE.name().toLowerCase());
             }
-            reply.setText(encode(reply.getText()));
+            if (!reply.getMrkdwn()) {
+                reply.setText(encode(reply.getText()));
+            }
             if (reply.getChannel() == null && event.getChannelId() != null) {
                 reply.setChannel(event.getChannelId());
             }
