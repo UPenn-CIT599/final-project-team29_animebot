@@ -41,7 +41,7 @@ Follow these instructions to quickly get the animebot up and running:
 <details>
 <summary>Click here: Maven Install</summary>
 
-![jbot Maven Install](images/readme-jbot-install.png)
+![jbot Maven Install](images/readme-jbot-install.PNG)
 
 </details>
 
