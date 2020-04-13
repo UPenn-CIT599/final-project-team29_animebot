@@ -83,4 +83,5 @@ class MyAnimeListTest {
 		TreeMap<Integer, Manga> results = MyAnimeList.searchForMangaByTitle(title, 1);
 		assertEquals(8.11, results.get(1).getScore());
 	}
+	
 }
