@@ -1,13 +1,12 @@
 package myanimelist;
 
-
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 class MangaTest {
 
 	@Test
-	void testgetChapters() {
+	void testGetChapters() {
 		Manga manga = MyAnimeList.getManga(3468);
 		assertEquals(62, manga.getChapters());
 	}
@@ -43,7 +42,7 @@ class MangaTest {
 	}
 
 	@Test
-	void testGetIsPublishing() {
+	void testIsPublishing() {
 		Manga manga = MyAnimeList.getManga(13);
 		assertEquals(true, manga.isPublishing());
 	}
