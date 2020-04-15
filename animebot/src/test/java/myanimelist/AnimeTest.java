@@ -1,12 +1,17 @@
 package myanimelist;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.TreeMap;
+
 import org.junit.jupiter.api.Test;
 
 public class AnimeTest {
 
 	@Test
 	void testGetEpisodeList() {
+		TreeMap<Integer, AnimeEpisode> episodes = MyAnimeList.getAnime(4181).getEpisodeList();
+		assertEquals("The Goodbye at the End of Summer", episodes.get(1).getTitle());
 	}
 
 	@Test
