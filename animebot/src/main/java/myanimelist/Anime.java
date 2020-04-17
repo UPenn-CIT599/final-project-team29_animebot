@@ -171,7 +171,7 @@ public class Anime extends MyAnimeListMedia {
                     
                     AnimeEpisode episode = new AnimeEpisode(malId);
                     episode.setValues(obj);
-                    episodes.put(id, episode);
+                    episodes.put(malId, episode);
                 }
                 
                 page++;
