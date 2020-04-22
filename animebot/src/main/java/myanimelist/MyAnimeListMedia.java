@@ -3,6 +3,8 @@ package myanimelist;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,7 +12,7 @@ import org.json.JSONObject;
 /**
  * Base object for MyAnimeList media types (ie Anime, Manga)
  */
-public class MyAnimeListMedia extends MyAnimeListObject implements Comparable {
+public abstract class MyAnimeListMedia extends MyAnimeListObject implements Comparable {
     protected static Map<String, String> MEDIA_PROPERTY_TYPES = new HashMap<>();
     static {
         MEDIA_PROPERTY_TYPES.put("background", "string");

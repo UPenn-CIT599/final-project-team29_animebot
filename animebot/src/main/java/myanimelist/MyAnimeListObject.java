@@ -8,7 +8,7 @@ import org.json.JSONObject;
 /**
  * Base class for all MyAnimeList classes 
  */
-public class MyAnimeListObject {
+public abstract class MyAnimeListObject {
     protected int id;
     protected Map<String, String> propertyTypes;
 
