@@ -79,7 +79,7 @@ public class SlackBot extends Bot {
      * @param session
      * @param event
      */
-	@Controller(pattern = "^(top)\\s*(\\d*)\\s*(favorite)*\\s*(novels|oneshots|manga|doujin|manhwa|manhua)\\s*(bypopularity)*")
+	@Controller(pattern = "^(top)\\s*(\\d*)\\s*(favorite)*\\s*(novels|oneshots|manga|doujin|manhwa|manhua)\\s*(bypopularity)*\\?")
 	public void getTopManga(WebSocketSession session, Event event, Matcher matcher) {
 	    // Number of results to return
         int topN = 3;
@@ -128,7 +128,7 @@ public class SlackBot extends Bot {
 	 * @param session
 	 * @param event
 	 */
-    @Controller(pattern = "(top)\\s*(\\d*)\\s*(airing|favorite|upcoming)*\\s*(anime|tv|movie|ova|special)\\s*(bypopularity)*")
+    @Controller(pattern = "(top)\\s*(\\d*)\\s*(airing|favorite|upcoming)*\\s*(anime|tv|movie|ova|special)\\s*(bypopularity)*\\?")
     public void getTopAnime(WebSocketSession session, Event event, Matcher matcher) {
         // Number of results to return
         int topN = 3;
