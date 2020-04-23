@@ -1,4 +1,5 @@
 package myanimelist;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +10,7 @@ import org.json.JSONObject;
 /**
  * Base object for MyAnimeList media types (ie Anime, Manga)
  */
-public class MyAnimeListMedia extends MyAnimeListObject {
+public abstract class MyAnimeListMedia extends MyAnimeListObject implements Comparable<MyAnimeListMedia> {
     protected static Map<String, String> MEDIA_PROPERTY_TYPES = new HashMap<>();
     static {
         MEDIA_PROPERTY_TYPES.put("background", "string");
@@ -379,6 +380,19 @@ public class MyAnimeListMedia extends MyAnimeListObject {
         }
         catch (JSONException e) {
             return false;
+        }
+    }
+
+    @Override
+    public int compareTo(MyAnimeListMedia otherMedia) {
+        if (this.getScore() < otherMedia.getScore()) {
+            return -1;
+        }
+        else if(this.getScore() > otherMedia.getScore()) {
+            return 1;
+        }
+        else {
+            return 0;
         }
     }
 

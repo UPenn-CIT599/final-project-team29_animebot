@@ -37,6 +37,7 @@ public class Message {
     private String lastRead;
     @JsonProperty("unread_count")
     private int unreadCount;
+    private boolean mrkdwn;
 
     public Message() {
     }
@@ -155,6 +156,14 @@ public class Message {
 
     public void setParentUserId(String parentUserId) {
         this.parentUserId = parentUserId;
+    }
+    
+    public boolean getMrkdwn() {
+        return mrkdwn;
+    }
+    
+    public void setMrkdwn(boolean mrkdwn) {
+        this.mrkdwn = mrkdwn;
     }
 
     public boolean isSubscribed() {
