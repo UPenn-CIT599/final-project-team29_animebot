@@ -7,8 +7,8 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class MangaTest {
-
- @Test
+    
+    @Test
     void testCompareTo() {
         Map<Integer, Manga> topManga = MyAnimeList.getTopManga("manga");
         Manga manga2 = topManga.get(2);
