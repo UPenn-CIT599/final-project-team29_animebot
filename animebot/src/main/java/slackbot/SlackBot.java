@@ -76,10 +76,10 @@ public class SlackBot extends Bot {
      * @param session
      * @param event
      */
-	@Controller(pattern = "^([tT]op)\\s*(\\d*)\\s*(favorite)*\\s*(novels|oneshots|manga|doujin|manhwa|manhua)\\s*(bypopularity)*$")
+	@Controller(pattern = "([tT]op)\\s*(\\d*)\\s*(favorite)*\\s*(novels|oneshots|manga|doujin|manhwa|manhua)\\s*(bypopularity)*")
 	public void getTopManga(WebSocketSession session, Event event, Matcher matcher) {
 	    // Number of results to return
-        int topN = 50;
+        int topN = 3;
         String numReturn = matcher.group(2);
         if (numReturn != null && !numReturn.isEmpty()) {
             topN = Integer.parseInt(numReturn);
@@ -125,10 +125,10 @@ public class SlackBot extends Bot {
 	 * @param session
 	 * @param event
 	 */
-    @Controller(pattern = "([tT]op)\\s*(\\d*)\\s*(airing|favorite|upcoming)*\\s*(anime|tv|movie|ova|special)\\s*(bypopularity)*$")
+    @Controller(pattern = "([tT]op)\\s*(\\d*)\\s*(airing|favorite|upcoming)*\\s*(anime|tv|movie|ova|special)\\s*(bypopularity)*")
     public void getTopAnime(WebSocketSession session, Event event, Matcher matcher) {
         // Number of results to return
-        int topN = 50;
+        int topN = 3;
         String numReturn = matcher.group(2);
         if (numReturn != null && !numReturn.isEmpty()) {
             topN = Integer.parseInt(numReturn);
