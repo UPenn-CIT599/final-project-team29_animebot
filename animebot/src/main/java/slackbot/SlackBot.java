@@ -234,13 +234,14 @@ public class SlackBot extends Bot {
 		Anime animeTitle = genericTitle(anime);
 
 		Map<Integer, AnimeEpisode> episodes = animeTitle.getEpisodeList();
+		System.out.println("Number of Episodes: " + episodes.size());
 
 		StringBuilder msgSB = new StringBuilder();
 
-		msgSB.append("The episodes are: \r\n\r\n");
+		msgSB.append("The episodes are: \r\n");
 		for (int e : episodes.keySet()) {
 
-			msgSB.append(e + ": " + episodes.get(e).getTitle());
+			msgSB.append("\r\n" + e + ": " + episodes.get(e).getTitle());
 
 			if (e == 50) {
 				break;
