@@ -1,4 +1,5 @@
 package slackbot;
+
 import me.ramswaroop.jbot.core.common.Controller;
 
 import me.ramswaroop.jbot.core.common.EventType;
@@ -77,7 +78,7 @@ public class SlackBot extends Bot {
 	 * @param session
 	 * @param event
 	 */
-	@Controller(pattern = "([tT]op)\\s*(\\d*)\\s*(favorite)*\\s*(novels|oneshots|manga|doujin|manhwa|manhua)\\s*(bypopularity)*")
+	@Controller(pattern = "([tT]op)\\s*(\\d*)\\s*(favorite)*\\s*(novels|oneshots|manga|doujin|manhwa|manhua)\\s*(bypopularity|by popularity)*")
 	public void getTopManga(WebSocketSession session, Event event, Matcher matcher) {
 		// Number of results to return
 		int topN = 3;
@@ -102,6 +103,7 @@ public class SlackBot extends Bot {
 			}
 		}
 
+		category = category.replace("\\s", "");
 		Map<Integer, Manga> topManga = MyAnimeList.getTopManga(category);
 		StringBuilder msgSB = new StringBuilder();
 		msgSB.append("The top " + topN + " " + category + " are: \r\n\r\n");
@@ -225,7 +227,16 @@ public class SlackBot extends Bot {
 		stopConversation(event);
 	}
 
-	@Controller(pattern = "([wW]hat)\\s*(are)\\s*(the)*\\s*(episodes|shows)\\s*(for)*\\s*(\\w+)*$")
+	/**
+	 * The below gets the episodes for the anime entered. The method also checks if
+	 * there is a filler or a recap for the specific episode. This is set to 50
+	 * episodes to not overload.
+	 * 
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
+	@Controller(pattern = "([wW]hat)\\s*(are)\\s*(the)*\\s*(episodes|shows)\\s*(for)*\\s*(\\w+\\b.*)*")
 	public void getEpisodeListAnime(WebSocketSession session, Event event, Matcher matcher) {
 
 		String anime = matcher.group(6);
@@ -235,10 +246,20 @@ public class SlackBot extends Bot {
 		Map<Integer, AnimeEpisode> episodes = animeTitle.getEpisodeList();
 		StringBuilder msgSB = new StringBuilder();
 
-		msgSB.append("The episodes are: \r\n");
+		msgSB.append("The episodes are:");
 		for (int e : episodes.keySet()) {
 
-			msgSB.append("\r\n" + e + ": " + episodes.get(e).getTitle());
+			msgSB.append("\r\n\r\n" + e + ": " + episodes.get(e).getTitle());
+			msgSB.append("\r\n The Romanji title is: " + episodes.get(e).getTitleRomanji());
+
+			if (episodes.get(e).isFiller() == true) {
+				msgSB.append("\r\n Fun fact! This episode is a filler!\r\n");
+
+			}
+			if (episodes.get(e).isRecap() == true) {
+				msgSB.append("\r\n Fun fact! This episode is a recap!\r\n");
+
+			}
 
 			if (e == 50) {
 				break;
@@ -251,7 +272,13 @@ public class SlackBot extends Bot {
 
 	}
 
-	@Controller(pattern = "([iI]s)\\s*(\\w+)\\s*(still|airing)*\\s*(airing|new|episodes|shows)\\s*(episodes)*$")
+	/**
+	 * The below takes in a command relating to airing new episodes, which animebot answers with yes or no if it is or isn't.
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
+	@Controller(pattern = "([iI]s)\\s*(\\w+)\\s*(still|airing)*\\s*(airing|new|episodes|shows)\\s*(episodes)*")
 	public void animeIsAiring(WebSocketSession session, Event event, Matcher matcher) {
 
 		String anime = matcher.group(2);
@@ -270,6 +297,31 @@ public class SlackBot extends Bot {
 
 	}
 
+	/**
+	 * Animebot checks what the status for the media (Anime/Manga) is (airing, paused, etc)
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
+	@Controller(pattern = "([wW]hat)\\s*(is)\\s*(the)*\\s*(status)\\s*(of|for)\\s*(\\w+\\b.*)*")
+	public void statusOfMedia(WebSocketSession session, Event event, Matcher matcher) {
+
+		String name = matcher.group(6);
+		Anime animeTitle = genericTitle(name);
+		Manga mangaTitle = genericTitleManga(name);
+		String status = animeTitle.getStatus();
+
+		reply(session, event, "Here is the status for the anime: " + animeTitle.getStatus()
+				+ "\r\n Here is the status for the manga: " + mangaTitle.getStatus());
+
+	}
+
+	/**
+	 * The below method checks how many episodes are in the given anime.
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
 	@Controller(pattern = "([hH]ow)\\s*(many)\\s*(episodes)\\s*(does)\\s*(\\w+)\\s*(have)*$")
 	public void animeNumberOfEpisodes(WebSocketSession session, Event event, Matcher matcher) {
 
@@ -280,11 +332,13 @@ public class SlackBot extends Bot {
 		reply(session, event, anime + " has " + numberOfEpisodes + " episodes.");
 
 	}
-
-	// Add "what are they??" as in like what are the episodes, Once episode list is
-	// fixed...
-
-	@Controller(pattern = "([wW]hen)\\s*(did)\\s*(\\w+\\b.*)\\s*(premiere|air)*$")
+	/**
+	 * the below checks when the anime premiered.
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
+	@Controller(pattern = "([wW]hen)\\s*(did)\\s*(\\w+)\\s*(premiere|air)*")
 	public void animePremiered(WebSocketSession session, Event event, Matcher matcher) {
 
 		String anime = matcher.group(3);
@@ -295,7 +349,13 @@ public class SlackBot extends Bot {
 
 	}
 
-	@Controller(pattern = "([wW]hat)\\s*(was)\\s*(the)\\s*(inspiration|source)\\s*(behind|for)\\s*(\\w+\\b.*)*$")
+	/**
+	 * Checks the inspiration for the anime (whether it was manga, original, etc)
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
+	@Controller(pattern = "([wW]hat)\\s*(was)\\s*(the)\\s*(inspiration|source)\\s*(behind|for)\\s*(\\w+\\b.*)*")
 	public void animeSource(WebSocketSession session, Event event, Matcher matcher) {
 
 		String anime = matcher.group(6);
@@ -307,7 +367,13 @@ public class SlackBot extends Bot {
 
 	}
 
-	@Controller(pattern = "([wW]hat|)\\s*(is)\\s*(the)\\s*(trailer)\\s*(for)\\s*(\\w+\\b.*)*$")
+	/**
+	 * Gives the trailer for the anime.
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
+	@Controller(pattern = "([wW]hat|)\\s*(is)\\s*(the)\\s*(trailer)\\s*(for)\\s*(\\w+\\b.*)*")
 	public void animeTrailer(WebSocketSession session, Event event, Matcher matcher) {
 
 		String anime = matcher.group(6);
@@ -319,18 +385,30 @@ public class SlackBot extends Bot {
 
 	}
 
-	@Controller(pattern = "([tT]ell|)\\s*(me)\\s*(about)\\s*(\\w+\\b.*)*$")
+	/**
+	 * Gives more details about the media.
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
+	@Controller(pattern = "([tT]ell|[gG]ive)\\s*(me)\\s*(more|about)*\\s*(details)\\s*(about)*\\s*(\\w+\\b.*)*$")
 	public void background(WebSocketSession session, Event event, Matcher matcher) {
 
-		String anime = matcher.group(4);
+		String anime = matcher.group(6);
 		Anime animeTitle = genericTitle(anime);
 		String backgroundOfMedia = animeTitle.getBackground();
 
-		reply(session, event, "Here is what I have on the media " + anime + ": " + backgroundOfMedia);
+		reply(session, event, "Here is what I have on the media " + anime + ": \r\n " + backgroundOfMedia);
 
 	}
 
-	@Controller(pattern = "([wW]hat|[gG]ive)\\s*(me|are)\\s*(the)\\s*(reviews)\\s*(for)\\s*(\\w+\\b.*)*$")
+	/**
+	 * Returns the reviews for the anime in question. Only 1 review will show due to overloading the API.
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
+	@Controller(pattern = "([wW]hat|[gG]ive)\\s*(me|are)*\\s*(the)*\\s*(reviews)\\s*(for)*\\s*(\\w+\\b.*)*")
 	public void reviews(WebSocketSession session, Event event, Matcher matcher) {
 
 		String anime = matcher.group(6);
@@ -338,10 +416,18 @@ public class SlackBot extends Bot {
 		ArrayList<Review> reviews = animeTitle.getReviews();
 
 		StringBuilder msgSB = new StringBuilder();
-		msgSB.append("The reviews are: \r\n\r\n");
+		msgSB.append("Here is the review: \r\n\r\n");
+		int count = 0;
 		for (Review review : reviews) {
+			count++;
 
-			msgSB.append("<" + review.getUrl() + "|" + review.getContent() + ">\r\n");
+			msgSB.append("<" + review.getUrl() + "|" + "Link to the review." + ">" + "\r\n"+ review.getContent() +"\r\n\r\n");
+			msgSB.append(review.getHelpfulCount()+ " users found this review helpful.");
+
+			if (count >= 1) {
+
+				break;
+			}
 
 		}
 
@@ -351,8 +437,15 @@ public class SlackBot extends Bot {
 		reply(session, event, msg);
 
 	}
-
-	@Controller(pattern = "([wW]hat)\\s*(is)\\s*(the)\\s*([eE]nglish)\\s*(title)\\s*(for)\\s*(\\w+\\b.*)*$")
+	
+	
+	/**
+	 * Returns English title if you enter a Japanese title.
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
+	@Controller(pattern = "([wW]hat)\\s*(is)\\s*(the)\\s*([eE]nglish)\\s*(title)\\s*(for)\\s*(\\w+\\b.*)*")
 	public void englishTitle(WebSocketSession session, Event event, Matcher matcher) {
 
 		String anime = matcher.group(7);
@@ -363,17 +456,140 @@ public class SlackBot extends Bot {
 
 	}
 
-	@Controller(pattern = "([wW]hat)\\s*(is|are)\\s*(the)\\s*(prequels|prequel)\\s*(for)\\s*(\\w+\\b.*)*$")
-	public void prequel(WebSocketSession session, Event event, Matcher matcher) {
+	/**
+	 * Returns the prequel for the anime and manga.
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
+	@Controller(pattern = "([wW]hat)\\s*(is|are)\\s*(the)\\s*(prequels|prequel)\\s*(for)\\s*(\\w+\\b.*)*")
+	public void animePrequel(WebSocketSession session, Event event, Matcher matcher) {
 
-		String anime = matcher.group(6);
-		Anime animeTitle = genericTitle(anime);
+		String title = matcher.group(6);
+		Anime animeTitle = genericTitle(title);
 
-		reply(session, event, "The prequel for " + anime + " is " + animeTitle.getPrequel().get(1).getTitle());
+		String prequel = animeTitle.getPrequel().get(1).getTitle();
+		
+		if(prequel == null) {
+			reply(session, event, "There is no prequel for " + title);
+			
+		}
+		else {
+		reply(session, event,
+				"The prequel for the anime,  " + title + ", is " + animeTitle.getPrequel().get(1).getTitle());
+		}
+
+	}
+	/**
+	 * Returns prequel for the anime in question
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
+	@Controller(pattern = "([wW]hat)\\s*(is|are)\\s*(the)\\s*(sequels|sequel)\\s*(for)\\s*(\\w+\\b.*)*")
+	public void animeSequel(WebSocketSession session, Event event, Matcher matcher) {
+
+		String title = matcher.group(6);
+		Anime animeTitle = genericTitle(title);
+
+		String sequel = animeTitle.getSequel().get(1).getTitle();
+		
+		if(sequel == null) {
+			reply(session, event, "There is no sequel for " + title);
+			
+		}
+		else {
+		reply(session, event,
+				"The sequel for the anime,  " + title + ", is " + animeTitle.getPrequel().get(1).getTitle());
+		}
 
 	}
 
-	@Controller(pattern = "([hH]ow|)\\s*(many)\\s*(people|users)\\s*(like)\\s*(\\w+\\b.*)*$")
+	/**
+	 * Returns photo URLs for specified anime/manga
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
+	@Controller(pattern = "([sS]how)*\\s*(me)*\\s*(pictures|photos)\\s*(of|for)\\s*(\\w+\\b.*)*")
+	public void pictures(WebSocketSession session, Event event, Matcher matcher) {
+		String title = matcher.group(5);
+		Manga mangaTitle = genericTitleManga(title);
+		Anime animeTitle = genericTitle(title);
+
+		StringBuilder msgSB = new StringBuilder();
+
+		msgSB.append("Here are picture URL's for the anime: \r\n");
+		for (String e : animeTitle.getPictures()) {
+
+			msgSB.append("\r\n" + e);
+
+		}
+
+		msgSB.append("\r\n Here are picture URL's for the manga: \r\n");
+		for (String e : mangaTitle.getPictures()) {
+
+			msgSB.append("\r\n" + e);
+
+		}
+
+		Message msg = new Message(msgSB.toString());
+		msg.setMrkdwn(true);
+		reply(session, event, msg);
+	}
+	
+	/**
+	 * Returns recommendations for anime/manga in question
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
+	@Controller(pattern = "([gG]ive)*\\s*(me)*\\s*(recommendations|recs)\\s*(of|for)\\s*(\\w+\\b.*)*")
+	public void recommendations(WebSocketSession session, Event event, Matcher matcher) {
+		String title = matcher.group(5);
+		Manga mangaTitle = genericTitleManga(title);
+		Anime animeTitle = genericTitle(title);
+
+		Map<Integer, Anime> animeRecommendations = animeTitle.getRecommendations();
+		Map<Integer, Manga> mangaRecommendations = mangaTitle.getRecommendations();
+
+		StringBuilder msgSB = new StringBuilder();
+
+		msgSB.append("Here are the recommendations for the anime: \r\n");
+		for (int e : animeRecommendations.keySet()) {
+
+			msgSB.append("\r\n" + e + ". " + animeRecommendations.get(e).getTitle());
+
+			if (e == 20) {
+				break;
+			}
+
+		}
+
+		msgSB.append("\r\n Here are the recommendations for the manga: \r\n");
+		for (int e : mangaRecommendations.keySet()) {
+
+			msgSB.append("\r\n" + e + ". " + mangaRecommendations.get(e).getTitle());
+
+			if (e == 20) {
+				break;
+			}
+
+		}
+
+		Message msg = new Message(msgSB.toString());
+		msg.setMrkdwn(true);
+		reply(session, event, msg);
+	}
+
+	
+	/**
+	 * Returns how many users like the anime in question
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
+	@Controller(pattern = "([hH]ow|)\\s*(many)\\s*(people|users)\\s*(like)\\s*(\\w+\\b.*)*")
 	public void usersFavorite(WebSocketSession session, Event event, Matcher matcher) {
 
 		String anime = matcher.group(5);
@@ -386,19 +602,49 @@ public class SlackBot extends Bot {
 				+ " members added " + anime + " to their profile!");
 
 	}
+	
+	/**
+	 * Returns overall rank of anime
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
+	@Controller(pattern = "([hH]ow|)\\s*(popular)\\s*(is)\\s*(\\w+\\b.*)*$")
+	public void popularity(WebSocketSession session, Event event, Matcher matcher) {
 
-	@Controller(pattern = "([aA]re|)\\s*(there)\\s*(any|news|articles)\\s*(news|articles)\\s*(for)\\s*(\\w+\\b.*)*$")
+		String anime = matcher.group(4);
+		Anime animeTitle = genericTitle(anime);
+		int ranking = animeTitle.getPopularity();
+
+		reply(session, event, anime + "'s overall rank is " + ranking + ".");
+
+	}
+	
+	/**
+	 * Returns news articles 
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
+	@Controller(pattern = "([aA]re)*\\s*(there)*\\s*(any|news|articles)\\s*(news|articles)\\s*(articles|for)*\\s(for)*\\s*(\\w+\\b.*)*")
 	public void news(WebSocketSession session, Event event, Matcher matcher) {
 
-		String anime = matcher.group(6);
+		String anime = matcher.group(7);
 		Anime animeTitle = genericTitle(anime);
 		ArrayList<News> articles = animeTitle.getNews();
 		StringBuilder msgSB = new StringBuilder();
 		msgSB.append("The news are: \r\n\r\n");
+		int counter = 0;
 		for (News article : articles) {
+			counter++;
+			msgSB.append("Article " + counter + ": " + "<" + article.getUrl() + "|" + article.getTitle() + ">\r\n");
+			msgSB.append("Author: " + "<" + article.getAuthorUrl() + "|" + article.getAuthorName() + ">\r\n");
+			msgSB.append("Here is the intro to the article in case you are interested: \r\n" + article.getIntro()
+					+ "\r\n\r\n");
 
-			msgSB.append("<" + article.getUrl() + "|" + article.getTitle() + ">\r\n");
-
+			if (counter == 10) {
+				break;
+			}
 		}
 
 		Message msg = new Message(msgSB.toString());
@@ -407,8 +653,14 @@ public class SlackBot extends Bot {
 		reply(session, event, msg);
 
 	}
-
-	@Controller(pattern = "([hH]ow)\\s*(many)\\s*(chapters)\\s*(does)\\s*(\\w+)\\s*(have)*$")
+	
+	/**
+	 * Returns number of chapters for the manga version
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
+	@Controller(pattern = "([hH]ow)\\s*(many)\\s*(chapters)\\s*(does)\\s*(\\w+)\\s*(have)*")
 	public void mangaChapters(WebSocketSession session, Event event, Matcher matcher) {
 
 		String manga = matcher.group(5);
@@ -418,8 +670,14 @@ public class SlackBot extends Bot {
 		reply(session, event, manga + " has " + numberOfChapters + " chapters in the manga.");
 
 	}
-
-	@Controller(pattern = "([hH]ow|)\\s*(many)\\s*(people|users)\\s*(scored)\\s*(\\w+\\b.*)*$")
+	
+	/**
+	 * Returns how many users scored the manga
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
+	@Controller(pattern = "([hH]ow|)\\s*(many)\\s*(people|users)\\s*(scored)\\s*(\\w+\\b.*)*")
 	public void usersScored(WebSocketSession session, Event event, Matcher matcher) {
 
 		String manga = matcher.group(5);
@@ -430,18 +688,66 @@ public class SlackBot extends Bot {
 
 	}
 
+	/**
+	 * Returns the score for both media
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
+	@Controller(pattern = "([wW]hat|)\\s*(is)\\s*(the)\\s*(score)\\s*(for)\\s*(\\w+\\b.*)*")
+	public void mediaScore(WebSocketSession session, Event event, Matcher matcher) {
+
+		String title = matcher.group(6);
+		Manga mangaTitle = genericTitleManga(title);
+		Anime animeTitle = genericTitle(title);
+
+		reply(session, event, "The average user score for the anime is " + animeTitle.getScore()
+				+ ".\r\n The average user score for the manga is " + mangaTitle.getScore() + ".");
+
+	}
+	
+	/**
+	 * Returns sumamry for the anime and manga
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
+	@Controller(pattern = "([wW]hat)\\s*(is)\\s*(the)\\s*(synopsis|summary)\\s*(for|of)\\s*(\\w+\\b.*)*")
+	public void mediaSynopsis(WebSocketSession session, Event event, Matcher matcher) {
+
+		String title = matcher.group(6);
+		Manga mangaTitle = genericTitleManga(title);
+		Anime animeTitle = genericTitle(title);
+
+		reply(session, event, "Here is the synopsis for the anime: " + animeTitle.getSynopsis()
+				+ ".\r\n\r\n Here is the synopsis for the manga: " + mangaTitle.getSynopsis() + ".");
+
+	}
+	/**
+	 * Returns the number of volumes in the manga
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
 	@Controller(pattern = "([hH]ow)\\s*(many)\\s*(volumes)\\s*(does)\\s*(\\w+)\\s*(have)*$")
 	public void mangaVolumes(WebSocketSession session, Event event, Matcher matcher) {
 
 		String manga = matcher.group(5);
 		Manga mangaTitle = genericTitleManga(manga);
-		int numberOfChapters = mangaTitle.getVolumes();
+		int numberOfVolumes = mangaTitle.getVolumes();
 
-		reply(session, event, manga + " has " + numberOfChapters + " volumes in the manga.");
+		reply(session, event, manga + " has " + numberOfVolumes + " volumes in the manga.");
 
 	}
-
-	@Controller(pattern = "([iI]s)\\s*(\\w+)\\s*(still|publishing)*\\s*(publishing|new|)\\s*(manga)*$")
+	
+	
+	/**
+	 * Returns whether or not the manga is still being published
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
+	@Controller(pattern = "([iI]s)\\s*(\\w+)\\s*(still|publishing)\\s*(publishing|new)\\s*(manga)*")
 	public void animeIsPulishing(WebSocketSession session, Event event, Matcher matcher) {
 
 		String manga = matcher.group(2);
@@ -460,6 +766,36 @@ public class SlackBot extends Bot {
 
 	}
 
+	/**
+	 * Does a comparison between the anime and manga
+	 * @param session
+	 * @param event
+	 * @param matcher
+	 */
+	@Controller(pattern = "([wW]as)\\s*(the)\\s*(manga|anime)\\s*(or|better)*\\s(the)*\\s*(anime|manga|than)*\\s*(better|the)*\\s*(anime|manga)*\\s*(for|of)\\s*(\\w+\\b.*)*")
+	public void compareTo(WebSocketSession session, Event event, Matcher matcher) {
+
+		String title = matcher.group(9);
+		Manga mangaTitle = genericTitleManga(title);
+		Anime animeTitle = genericTitle(title);
+
+		if (animeTitle.compareTo(mangaTitle) == -1) {
+
+			reply(session, event, "The manga is more popular compared to the anime.");
+
+		} else {
+
+			reply(session, event, "The anime is more popular compared to the manga.");
+
+		}
+
+	}
+
+	/**
+	 * Created a generic title for the anime to avoid repeating code.
+	 * @param anime
+	 * @return
+	 */
 	public Anime genericTitle(String anime) {
 
 		Map<Integer, Anime> animeTitle = MyAnimeList.searchForAnimeByTitle(anime, 5);
@@ -468,6 +804,11 @@ public class SlackBot extends Bot {
 
 	}
 
+	/**
+	 * Created generic title for the manga to avoid repeating code.
+	 * @param manga
+	 * @return
+	 */
 	public Manga genericTitleManga(String manga) {
 
 		Map<Integer, Manga> mangaTitle = MyAnimeList.searchForMangaByTitle(manga, 5);
