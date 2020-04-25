@@ -467,17 +467,18 @@ public class SlackBot extends Bot {
 
 		String title = matcher.group(6);
 		Anime animeTitle = genericTitle(title);
-
-		String prequel = animeTitle.getPrequel().get(1).getTitle();
 		
-		if(prequel == null) {
-			reply(session, event, "There is no prequel for " + title);
+		if(animeTitle.getPrequel().size() == 0) {
+			
+			reply(session, event, "There are no prequels!");
+				
 			
 		}
+	
 		else {
-		reply(session, event,
-				"The prequel for the anime,  " + title + ", is " + animeTitle.getPrequel().get(1).getTitle());
+		reply(session, event, "The prequel is: " + animeTitle.getPrequel().get(0).getTitle());
 		}
+		
 
 	}
 	/**
@@ -492,18 +493,32 @@ public class SlackBot extends Bot {
 		String title = matcher.group(6);
 		Anime animeTitle = genericTitle(title);
 
-		String sequel = animeTitle.getSequel().get(1).getTitle();
+		ArrayList<Anime> sequels = animeTitle.getSequel();
 		
-		if(sequel == null) {
-			reply(session, event, "There is no sequel for " + title);
+		StringBuilder msgSB = new StringBuilder();
+		int count = 1;
+		msgSB.append("Here are the sequels: \r\n\r\n");
+		for (Anime sequel: sequels) {
+
+			msgSB.append(count +". " +sequel.getTitle());
 			
-		}
-		else {
-		reply(session, event,
-				"The sequel for the anime,  " + title + ", is " + animeTitle.getPrequel().get(1).getTitle());
+			if (count >= 10) {
+
+				break;
+			}
+
+			
+
 		}
 
+		Message msg = new Message(msgSB.toString());
+		msg.setMrkdwn(true);
+
+		reply(session, event, msg);
 	}
+
+
+
 
 	/**
 	 * Returns photo URLs for specified anime/manga
