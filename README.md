@@ -109,7 +109,8 @@ community and database” — MyAnimeList. It parses the website to satisfy the 
 
 In general, an Application Program Interface (API) is a set of routines, protocols, and tools for building software applications. 
 An API specifies how software components should interact. In simple terms, it is a software intermediary that allows two applications to talk to each other. 
-Google Maps, Twitter, YouTube and Flickr have some of the most popular APIs. 
+
+![bot](images/animebotDiagram.png) 
 
 
 ---
