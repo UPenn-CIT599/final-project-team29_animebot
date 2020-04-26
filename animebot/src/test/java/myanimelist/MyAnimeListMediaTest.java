@@ -44,7 +44,7 @@ public class MyAnimeListMediaTest {
 	@Test
 	void testGetPictures() {
 		Anime anime = MyAnimeList.getAnime(11061);
-		assertEquals("[B@6eda5c9", anime.getPictures().get(0).getBytes().toString());
+		assertEquals("https://cdn.myanimelist.net/images/anime/11/33657l.jpg", anime.getPictures().get(0));
 	}
 
 	@Test
