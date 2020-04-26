@@ -125,7 +125,7 @@ public class MyAnimeList {
             category = "bypopularity";
         }
         
-        categoryStr = AnimeTopCategory.valueOf(category.toLowerCase()).toString();
+        categoryStr = AnimeTopCategory.valueOf(category.replaceAll("\\s", "").toLowerCase()).toString();
         TreeMap<Integer, Anime> topAnime = new TreeMap<>();
         
         try {
@@ -172,7 +172,7 @@ public class MyAnimeList {
             category = "bypopularity";
         }
         
-        categoryStr = MangaTopCategory.valueOf(category.toLowerCase()).toString();
+        categoryStr = MangaTopCategory.valueOf(category.replaceAll("\\s", "").toLowerCase()).toString();
         TreeMap<Integer, Manga> topManga = new TreeMap<>();
         
         try {
@@ -237,6 +237,7 @@ public class MyAnimeList {
      */
     public static String makeAPICall(String query) {
         try {
+            Thread.sleep(200);
             URL restCall = new URL(ENDPOINT + query);
             URLConnection yc = restCall.openConnection();
             BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
@@ -247,9 +248,9 @@ public class MyAnimeList {
                  response.append(inputLine);
             }
             in.close();
-                 
+            
             return response.toString();
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return null;
         }

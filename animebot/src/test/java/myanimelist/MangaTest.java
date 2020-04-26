@@ -7,12 +7,6 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class MangaTest {
-
-	@Test
-	void testGetChapters() {
-		Manga manga = MyAnimeList.getManga(3468);
-		assertEquals(62, manga.getChapters());
-	}
     
     @Test
     void testCompareTo() {
@@ -22,6 +16,12 @@ class MangaTest {
         
         assertEquals(-1, manga4.compareTo(manga2));
     }
+
+	@Test
+	void testGetChapters() {
+		Manga manga = MyAnimeList.getManga(3468);
+		assertEquals(62, manga.getChapters());
+	}
 
 	@Test
 	void testGetPrequel() {

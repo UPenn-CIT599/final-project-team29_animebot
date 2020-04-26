@@ -8,7 +8,7 @@ public class ReviewTest {
 	@Test
 	void testGetHelpfulCount() {
 		Anime anime = MyAnimeList.getAnime(9253);
-		assertEquals(2078, anime.getReviews().get(0).getHelpfulCount());
+		assertEquals(2083, anime.getReviews().get(0).getHelpfulCount());
 	}
 
 	@Test
