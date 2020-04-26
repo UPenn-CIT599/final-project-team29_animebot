@@ -44,21 +44,13 @@ public class MyAnimeListMediaTest {
 	@Test
 	void testGetPictures() {
 		Anime anime = MyAnimeList.getAnime(11061);
-<<<<<<< HEAD
 		assertEquals("https://cdn.myanimelist.net/images/anime/11/33657l.jpg", anime.getPictures().get(0));
-=======
-		assertEquals("[B@6eda5c9", anime.getPictures().get(0).getBytes().toString());
->>>>>>> master
 	}
 
 	@Test
 	void testGetPopularity() {
 		Anime anime = MyAnimeList.getAnime(21);
-<<<<<<< HEAD
 		assertEquals(33, anime.getPopularity());
-=======
-		assertEquals(35, anime.getPopularity());
->>>>>>> master
 	}
 
 	@Test
