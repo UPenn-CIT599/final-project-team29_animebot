@@ -78,7 +78,7 @@ public class SlackBot extends Bot {
 	 * @param session
 	 * @param event
 	 */
-	@Controller(pattern = "([tT]op)\\s*(\\d*)\\s*(favorite)*\\s*(novels|oneshots|manga|doujin|manhwa|manhua)\\s*(bypopularity|by popularity)*")
+	@Controller(pattern = "(?i)(top)\\s*(\\d*)\\s*(favorite)*\\s*(novels|oneshots|manga|doujin|manhwa|manhua)\\s*(bypopularity|by popularity)*")
 	public void getTopManga(WebSocketSession session, Event event, Matcher matcher) {
 		// Number of results to return
 		int topN = 3;
@@ -127,7 +127,7 @@ public class SlackBot extends Bot {
 	 * @param session
 	 * @param event
 	 */
-	@Controller(pattern = "([tT]op)\\s*(\\d*)\\s*(airing|favorite|upcoming)*\\s*(anime|tv|movie|ova|special)\\s*(bypopularity|by popularity)*")
+	@Controller(pattern = "(?i)(top)\\s*(\\d*)\\s*(airing|favorite|upcoming)*\\s*(anime|tv|movie|ova|special)\\s*(bypopularity|by popularity)*")
 	public void getTopAnime(WebSocketSession session, Event event, Matcher matcher) {
 		// Number of results to return
 		int topN = 3;
@@ -181,7 +181,7 @@ public class SlackBot extends Bot {
 	 * @param session
 	 * @param event
 	 */
-	@Controller(pattern = "[aA]nime search", next = "whatAnime")
+	@Controller(pattern = "(?i)(anime search)", next = "whatAnime")
 	public void searchForAnimeByTitle(WebSocketSession session, Event event) {
 		startConversation(event, "whatAnime");
 		reply(session, event, "What anime do you want to search by title?");
@@ -209,7 +209,7 @@ public class SlackBot extends Bot {
 	 * @param session
 	 * @param event
 	 */
-	@Controller(pattern = "[mM]anga search", next = "whatManga")
+	@Controller(pattern = "(?i)(manga search)", next = "whatManga")
 	public void searchForMangaByTitle(WebSocketSession session, Event event) {
 		startConversation(event, "whatManga");
 		reply(session, event, "What manga do you want to search by title?");
@@ -241,7 +241,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([wW]hat)\\s*(are)\\s*(the)*\\s*(episodes|shows)\\s*(for)*\\s*(\\w+\\b.*)*")
+	@Controller(pattern = "(?i)(what)\\s*(are)\\s*(the)*\\s*(episodes|shows)\\s*(for)*\\s*(\\w+\\b.*)*")
 	public void getEpisodeListAnime(WebSocketSession session, Event event, Matcher matcher) {
 
 		String anime = matcher.group(6);
@@ -283,7 +283,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([iI]s)\\s*(\\w+)\\s*(still|airing)*\\s*(airing|episodes|shows)\\s*(episodes)*")
+	@Controller(pattern = "(?i)(is)\\s*(\\w+)\\s*(still|airing)*\\s*(airing|episodes|shows)\\s*(episodes)*")
 	public void animeIsAiring(WebSocketSession session, Event event, Matcher matcher) {
 
 		String anime = matcher.group(2);
@@ -308,7 +308,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([wW]hat)\\s*(is)\\s*(the)*\\s*(status)\\s*(of|for)\\s*(\\w+\\b.*)*")
+	@Controller(pattern = "(?i)(what)\\s*(is)\\s*(the)*\\s*(status)\\s*(of|for)\\s*(\\w+\\b.*)*")
 	public void statusOfMedia(WebSocketSession session, Event event, Matcher matcher) {
 
 		String name = matcher.group(6);
@@ -327,7 +327,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([hH]ow)\\s*(many)\\s*(episodes)\\s*(does)\\s*(\\w+)\\s*(have)*$")
+	@Controller(pattern = "(?i)(how)\\s*(many)\\s*(episodes)\\s*(does)\\s*(\\w+)\\s*(have)*$")
 	public void animeNumberOfEpisodes(WebSocketSession session, Event event, Matcher matcher) {
 
 		String anime = matcher.group(5);
@@ -343,7 +343,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([wW]hen)\\s*(did)\\s*(\\w+)\\s*(premiere|air)*")
+	@Controller(pattern = "(?i)(when)\\s*(did)\\s*(\\w+)\\s*(premiere|air)*")
 	public void animePremiered(WebSocketSession session, Event event, Matcher matcher) {
 
 		String anime = matcher.group(3);
@@ -360,7 +360,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([wW]hat)\\s*(was)\\s*(the)\\s*(inspiration|source)\\s*(behind|for)\\s*(\\w+\\b.*)*")
+	@Controller(pattern = "(?i)(what)\\s*(was)\\s*(the)\\s*(inspiration|source)\\s*(behind|for)\\s*(\\w+\\b.*)*")
 	public void animeSource(WebSocketSession session, Event event, Matcher matcher) {
 
 		String anime = matcher.group(6);
@@ -378,7 +378,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([wW]hat|)\\s*(is)\\s*(the)\\s*(trailer)\\s*(for)\\s*(\\w+\\b.*)*")
+	@Controller(pattern = "(?i)(what|)\\s*(is)\\s*(the)\\s*(trailer)\\s*(for)\\s*(\\w+\\b.*)*")
 	public void animeTrailer(WebSocketSession session, Event event, Matcher matcher) {
 
 		String anime = matcher.group(6);
@@ -397,7 +397,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([tT]ell|[gG]ive)\\s*(me)\\s*(more|about)*\\s*(details)\\s*(about)*\\s*(\\w+\\b.*)*$")
+	@Controller(pattern = "(?i)(tell|[gG]ive)\\s*(me)\\s*(more|about)*\\s*(details)\\s*(about)*\\s*(\\w+\\b.*)*$")
 	public void background(WebSocketSession session, Event event, Matcher matcher) {
 
 		String anime = matcher.group(6);
@@ -414,7 +414,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([wW]hat|[gG]ive)\\s*(me|are)*\\s*(the)*\\s*(reviews)\\s*(for)*\\s*(\\w+\\b.*)*")
+	@Controller(pattern = "(?i)(what|give|get)\\s*(me|are)*\\s*(the)*\\s*(reviews)\\s*(for)*\\s*(\\w+\\b.*)*")
 	public void reviews(WebSocketSession session, Event event, Matcher matcher) {
 
 		String anime = matcher.group(6);
@@ -451,7 +451,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([wW]hat)\\s*(is)\\s*(the)\\s*([eE]nglish)\\s*(name|title)\\s*(for)\\s*(\\w+\\b.*)*")
+	@Controller(pattern = "(?i)(what)\\s*(is)\\s*(the)\\s*(english)\\s*(name|title)\\s*(for)\\s*(\\w+\\b.*)*")
 	public void englishTitle(WebSocketSession session, Event event, Matcher matcher) {
 
 		String anime = matcher.group(7);
@@ -468,7 +468,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([wW]hat)\\s*(is|are)\\s*(the)\\s*(prequels|prequel)\\s*(for)\\s*(\\w+\\b.*)*")
+	@Controller(pattern = "(?i)(what)\\s*(is|are)\\s*(the)\\s*(prequels|prequel)\\s*(for)\\s*(\\w+\\b.*)*")
 	public void animePrequel(WebSocketSession session, Event event, Matcher matcher) {
 
 		String title = matcher.group(6);
@@ -493,7 +493,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([wW]hat)\\s*(is|are)\\s*(the)\\s*(sequels|sequel)\\s*(for)\\s*(\\w+\\b.*)*")
+	@Controller(pattern = "(?i)(what)\\s*(is|are)\\s*(the)\\s*(sequels|sequel)\\s*(for)\\s*(\\w+\\b.*)*")
 	public void animeSequel(WebSocketSession session, Event event, Matcher matcher) {
 
 		String title = matcher.group(6);
@@ -532,7 +532,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([sS]how)*\\s*(me)*\\s*(pictures|photos)\\s*(of|for)\\s*(\\w+\\b.*)*")
+	@Controller(pattern = "(?i)(show)*\\s*(me)*\\s*(pictures|photos)\\s*(of|for)\\s*(\\w+\\b.*)*")
 	public void pictures(WebSocketSession session, Event event, Matcher matcher) {
 		String title = matcher.group(5);
 		Manga mangaTitle = genericTitleManga(title);
@@ -565,7 +565,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([gG]ive)*\\s*(me)*\\s*(recommendations|recs)\\s*(of|for)\\s*(\\w+\\b.*)*")
+	@Controller(pattern = "(?i)(give|get)*\\s*(me)*\\s*(recommendations|recs)\\s*(of|for)\\s*(\\w+\\b.*)*")
 	public void recommendations(WebSocketSession session, Event event, Matcher matcher) {
 		String title = matcher.group(5);
 		Manga mangaTitle = genericTitleManga(title);
@@ -610,7 +610,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([hH]ow|)\\s*(many)\\s*(people|users)\\s*(like|liked|enjoyed|loved)\\s*(\\w+\\b.*)*")
+	@Controller(pattern = "(?i)(how|)\\s*(many)\\s*(people|users)\\s*(like|liked|enjoyed|loved)\\s*(\\w+\\b.*)*")
 	public void usersFavorite(WebSocketSession session, Event event, Matcher matcher) {
 
 		String anime = matcher.group(5);
@@ -630,7 +630,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([hH]ow|)\\s*(popular)\\s*(is)\\s*(\\w+\\b.*)*$")
+	@Controller(pattern = "(?i)(how|)\\s*(popular)\\s*(is)\\s*(\\w+\\b.*)*$")
 	public void popularity(WebSocketSession session, Event event, Matcher matcher) {
 
 		String anime = matcher.group(4);
@@ -647,7 +647,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([aA]re)*\\s*(there)*\\s*(any|news|articles)\\s*(news|articles)\\s*(articles|for)*\\s(for)*\\s*(\\w+\\b.*)*")
+	@Controller(pattern = "(?i)(are)*\\s*(there)*\\s*(any|news|articles)\\s*(news|articles)\\s*(articles|for)*\\s(for)*\\s*(\\w+\\b.*)*")
 	public void news(WebSocketSession session, Event event, Matcher matcher) {
 
 		String anime = matcher.group(7);
@@ -681,7 +681,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([hH]ow)\\s*(many)\\s*(chapters)\\s*(does)\\s*(\\w+)\\s*(have)*")
+	@Controller(pattern = "(?i)(how)\\s*(many)\\s*(chapters)\\s*(does)\\s*(\\w+)\\s*(have)*")
 	public void mangaChapters(WebSocketSession session, Event event, Matcher matcher) {
 
 		String manga = matcher.group(5);
@@ -698,7 +698,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([hH]ow|)\\s*(many)\\s*(people|users)\\s*(scored)\\s*(\\w+\\b.*)*")
+	@Controller(pattern = "(?i)(how|)\\s*(many)\\s*(people|users)\\s*(scored)\\s*(\\w+\\b.*)*")
 	public void usersScored(WebSocketSession session, Event event, Matcher matcher) {
 
 		String manga = matcher.group(5);
@@ -715,7 +715,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([wW]hat|)\\s*(is)\\s*(the)\\s*(score)\\s*(for)\\s*(\\w+\\b.*)*")
+	@Controller(pattern = "(?i)(what|)\\s*(is)\\s*(the)\\s*(score)\\s*(for)\\s*(\\w+\\b.*)*")
 	public void mediaScore(WebSocketSession session, Event event, Matcher matcher) {
 
 		String title = matcher.group(6);
@@ -733,7 +733,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([wW]hat)\\s*(is)\\s*(the)\\s*(synopsis|summary)\\s*(for|of)\\s*(\\w+\\b.*)*")
+	@Controller(pattern = "(?i)(what)\\s*(is)\\s*(the)\\s*(synopsis|summary)\\s*(for|of)\\s*(\\w+\\b.*)*")
 	public void mediaSynopsis(WebSocketSession session, Event event, Matcher matcher) {
 
 		String title = matcher.group(6);
@@ -750,7 +750,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([hH]ow)\\s*(many)\\s*(volumes)\\s*(does)\\s*(\\w+)\\s*(have)*$")
+	@Controller(pattern = "(?i)(how)\\s*(many)\\s*(volumes)\\s*(does)\\s*(\\w+)\\s*(have)*$")
 	public void mangaVolumes(WebSocketSession session, Event event, Matcher matcher) {
 
 		String manga = matcher.group(5);
@@ -768,7 +768,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([iI]s)\\s*(\\w+)\\s*(still|publishing)\\s*(publishing|new)\\s*(new)*\\s*(manga)*")
+	@Controller(pattern = "(?i)(is)\\s*(\\w+)\\s*(still|publishing)\\s*(publishing|new)\\s*(new)*\\s*(manga)*")
 	public void animeIsPublishing(WebSocketSession session, Event event, Matcher matcher) {
 
 		String manga = matcher.group(2);
@@ -793,7 +793,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([wW]as)\\s*(the)\\s*(manga|anime)\\s*(or|better)*\\s(the)*\\s*(anime|manga|than)*\\s*(better|the)*\\s*(anime|manga)*\\s*(for|of)\\s*(\\w+\\b.*)*")
+	@Controller(pattern = "(?i)(was)\\s*(the)\\s*(manga|anime)\\s*(or|better)*\\s(the)*\\s*(anime|manga|than)*\\s*(better|the)*\\s*(anime|manga)*\\s*(for|of)\\s*(\\w+\\b.*)*")
 	public void compareTo(WebSocketSession session, Event event, Matcher matcher) {
 
 		String title = matcher.group(9);
