@@ -50,7 +50,7 @@ public class MyAnimeListMediaTest {
 	@Test
 	void testGetPopularity() {
 		Anime anime = MyAnimeList.getAnime(21);
-		assertEquals(35, anime.getPopularity());
+		assertEquals(33, anime.getPopularity());
 	}
 
 	@Test
