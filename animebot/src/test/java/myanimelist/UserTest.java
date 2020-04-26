@@ -31,7 +31,7 @@ public class UserTest {
 	@Test
 	void testGetImageUrl() {
 		User user = MyAnimeList.getUser(username);
-		assertEquals("https://cdn.myanimelist.net/images/userimages/285183.jpg?t=1583069400", user.getImageUrl());
+		assertEquals("https://cdn.myanimelist.net/images/userimages/285183.jpg?t=1587858000", user.getImageUrl());
 	}
 
 	@Test
