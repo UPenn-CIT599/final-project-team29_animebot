@@ -1,7 +1,6 @@
 package slackbot;
 
 import me.ramswaroop.jbot.core.common.Controller;
-
 import me.ramswaroop.jbot.core.common.EventType;
 import me.ramswaroop.jbot.core.common.JBot;
 import me.ramswaroop.jbot.core.slack.Bot;
@@ -15,12 +14,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.util.ArrayList;
-
-//import example.jbot.slack.SlackBot;
-
 import java.util.Map;
 import java.util.regex.Matcher;
-import java.util.TreeMap;
 
 import myanimelist.Anime;
 import myanimelist.AnimeEpisode;
@@ -28,7 +23,6 @@ import myanimelist.Manga;
 import myanimelist.MyAnimeList;
 import myanimelist.News;
 import myanimelist.Review;
-import myanimelist.enums.AnimeTopCategory;
 
 /**
  * The below methods follow the JBot framework guidelines such as
@@ -314,7 +308,6 @@ public class SlackBot extends Bot {
 		String name = matcher.group(6);
 		Anime animeTitle = genericTitle(name);
 		Manga mangaTitle = genericTitleManga(name);
-		String status = animeTitle.getStatus();
 
 		reply(session, event, "Here is the status for the anime: " + animeTitle.getStatus()
 				+ "\r\n Here is the status for the manga: " + mangaTitle.getStatus());
