@@ -278,7 +278,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([iI]s)\\s*(\\w+)\\s*(still|airing)*\\s*(airing|new|episodes|shows)\\s*(episodes)*")
+	@Controller(pattern = "([iI]s)\\s*(\\w+)\\s*(still|airing)*\\s*(airing|episodes|shows)\\s*(episodes)*")
 	public void animeIsAiring(WebSocketSession session, Event event, Matcher matcher) {
 
 		String anime = matcher.group(2);
@@ -287,11 +287,11 @@ public class SlackBot extends Bot {
 
 		if (isTrueOrFalse == true) {
 
-			reply(session, event, anime + " is still airing!");
+			reply(session, event, genericTitle(anime).getTitle() + " is still airing!");
 
 		} else {
 
-			reply(session, event, anime + " is not airing!");
+			reply(session, event, genericTitle(anime).getTitle() + " is not airing!");
 
 		}
 
@@ -329,7 +329,7 @@ public class SlackBot extends Bot {
 		Anime animeTitle = genericTitle(anime);
 		int numberOfEpisodes = animeTitle.getEpisodes();
 
-		reply(session, event, anime + " has " + numberOfEpisodes + " episodes.");
+		reply(session, event, genericTitle(anime).getTitle() + " has " + numberOfEpisodes + " episodes.");
 
 	}
 	/**
@@ -345,7 +345,7 @@ public class SlackBot extends Bot {
 		Anime animeTitle = genericTitle(anime);
 		String premiered = animeTitle.getPremiered();
 
-		reply(session, event, anime + " premiered " + premiered + ".");
+		reply(session, event, genericTitle(anime).getTitle() + " premiered " + premiered + ".");
 
 	}
 
@@ -363,7 +363,7 @@ public class SlackBot extends Bot {
 
 		String source = animeTitle.getSource();
 
-		reply(session, event, "The inspiration behind " + anime + " was:" + source);
+		reply(session, event, "The inspiration behind " + genericTitle(anime).getTitle() + " was:" + source);
 
 	}
 
@@ -378,10 +378,11 @@ public class SlackBot extends Bot {
 
 		String anime = matcher.group(6);
 		Anime animeTitle = genericTitle(anime);
+		
 
 		String trailer = animeTitle.getTrailerUrl();
 
-		reply(session, event, "Here is the trailer URL for " + anime + ": " + trailer);
+		reply(session, event, "Here is the trailer URL for " + genericTitle(anime).getTitle() + ": " + trailer);
 
 	}
 
@@ -445,14 +446,14 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([wW]hat)\\s*(is)\\s*(the)\\s*([eE]nglish)\\s*(title)\\s*(for)\\s*(\\w+\\b.*)*")
+	@Controller(pattern = "([wW]hat)\\s*(is)\\s*(the)\\s*([eE]nglish)\\s*(name|title)\\s*(for)\\s*(\\w+\\b.*)*")
 	public void englishTitle(WebSocketSession session, Event event, Matcher matcher) {
 
 		String anime = matcher.group(7);
 		Anime animeTitle = genericTitle(anime);
 		String title = animeTitle.getEnglishTitle();
 
-		reply(session, event, "The english title for " + anime + " is " + title);
+		reply(session, event, "The english title for " + genericTitle(anime).getTitle() + " is " + title);
 
 	}
 
@@ -581,7 +582,7 @@ public class SlackBot extends Bot {
 
 		}
 
-		msgSB.append("\r\n Here are the recommendations for the manga: \r\n");
+		msgSB.append("\r\n\r\n Here are the recommendations for the manga: \r\n");
 		for (int e : mangaRecommendations.keySet()) {
 
 			msgSB.append("\r\n" + e + ". " + mangaRecommendations.get(e).getTitle());
@@ -604,7 +605,7 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([hH]ow|)\\s*(many)\\s*(people|users)\\s*(like)\\s*(\\w+\\b.*)*")
+	@Controller(pattern = "([hH]ow|)\\s*(many)\\s*(people|users)\\s*(like|liked|enjoyed|loved)\\s*(\\w+\\b.*)*")
 	public void usersFavorite(WebSocketSession session, Event event, Matcher matcher) {
 
 		String anime = matcher.group(5);
@@ -613,8 +614,8 @@ public class SlackBot extends Bot {
 
 		int members = animeTitle.getMembers();
 
-		reply(session, event, "There are " + favorite + " users that love " + anime + ". Fun fact, " + members
-				+ " members added " + anime + " to their profile!");
+		reply(session, event, "There are " + favorite + " users that love " + genericTitle(anime).getTitle() + ". \r\nFun fact, " + members
+				+ " members added " + genericTitle(anime).getTitle() + " to their profile!");
 
 	}
 	
@@ -631,7 +632,7 @@ public class SlackBot extends Bot {
 		Anime animeTitle = genericTitle(anime);
 		int ranking = animeTitle.getPopularity();
 
-		reply(session, event, anime + "'s overall rank is " + ranking + ".");
+		reply(session, event, genericTitle(anime).getTitle() + "'s overall rank is " + ranking + ".");
 
 	}
 	
@@ -682,7 +683,7 @@ public class SlackBot extends Bot {
 		Manga mangaTitle = genericTitleManga(manga);
 		int numberOfChapters = mangaTitle.getChapters();
 
-		reply(session, event, manga + " has " + numberOfChapters + " chapters in the manga.");
+		reply(session, event, genericTitle(manga).getTitle() + " has " + numberOfChapters + " chapters in the manga.");
 
 	}
 	
@@ -699,7 +700,7 @@ public class SlackBot extends Bot {
 		Manga mangaTitle = genericTitleManga(manga);
 		int scored = mangaTitle.getScoredBy();
 
-		reply(session, event, "There are " + scored + " users that scored the manga " + manga + ".");
+		reply(session, event, "There are " + scored + " users that scored the manga " + genericTitle(manga).getTitle() + ".");
 
 	}
 
@@ -751,7 +752,7 @@ public class SlackBot extends Bot {
 		Manga mangaTitle = genericTitleManga(manga);
 		int numberOfVolumes = mangaTitle.getVolumes();
 
-		reply(session, event, manga + " has " + numberOfVolumes + " volumes in the manga.");
+		reply(session, event, genericTitle(manga).getTitle() + " has " + numberOfVolumes + " volumes in the manga.");
 
 	}
 	
@@ -762,8 +763,8 @@ public class SlackBot extends Bot {
 	 * @param event
 	 * @param matcher
 	 */
-	@Controller(pattern = "([iI]s)\\s*(\\w+)\\s*(still|publishing)\\s*(publishing|new)\\s*(manga)*")
-	public void animeIsPulishing(WebSocketSession session, Event event, Matcher matcher) {
+	@Controller(pattern = "([iI]s)\\s*(\\w+)\\s*(still|publishing)\\s*(publishing|new)\\s*(new)*\\s*(manga)*")
+	public void animeIsPublishing(WebSocketSession session, Event event, Matcher matcher) {
 
 		String manga = matcher.group(2);
 		Manga mangaTitle = genericTitleManga(manga);
@@ -771,11 +772,11 @@ public class SlackBot extends Bot {
 
 		if (isTrueOrFalse == true) {
 
-			reply(session, event, manga + " is still publishing!");
+			reply(session, event, genericTitle(manga).getTitle() + " is still publishing!");
 
 		} else {
 
-			reply(session, event, manga + " is not publishing!");
+			reply(session, event, genericTitle(manga).getTitle() + " is not publishing!");
 
 		}
 
