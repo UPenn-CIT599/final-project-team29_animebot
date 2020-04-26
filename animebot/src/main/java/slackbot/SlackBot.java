@@ -103,7 +103,6 @@ public class SlackBot extends Bot {
 			}
 		}
 
-		category = category.replace("\\s", "");
 		Map<Integer, Manga> topManga = MyAnimeList.getTopManga(category);
 		StringBuilder msgSB = new StringBuilder();
 		msgSB.append("The top " + topN + " " + category + " are: \r\n\r\n");
@@ -128,7 +127,7 @@ public class SlackBot extends Bot {
 	 * @param session
 	 * @param event
 	 */
-	@Controller(pattern = "([tT]op)\\s*(\\d*)\\s*(airing|favorite|upcoming)*\\s*(anime|tv|movie|ova|special)\\s*(bypopularity)*")
+	@Controller(pattern = "([tT]op)\\s*(\\d*)\\s*(airing|favorite|upcoming)*\\s*(anime|tv|movie|ova|special)\\s*(bypopularity|by popularity)*")
 	public void getTopAnime(WebSocketSession session, Event event, Matcher matcher) {
 		// Number of results to return
 		int topN = 3;
@@ -186,12 +185,14 @@ public class SlackBot extends Bot {
 	public void searchForAnimeByTitle(WebSocketSession session, Event event) {
 		startConversation(event, "whatAnime");
 		reply(session, event, "What anime do you want to search by title?");
-
 	}
 
 	@Controller
 	public void whatAnime(WebSocketSession session, Event event) {
-
+	    if (!isConversationOn(event)) {
+	        return;
+	    }
+	    
 		Map<Integer, Anime> animeByTitle = MyAnimeList.searchForAnimeByTitle(event.getText(), 5);
 		StringBuilder msg = new StringBuilder();
 		for (int rank : animeByTitle.keySet()) {
@@ -217,6 +218,10 @@ public class SlackBot extends Bot {
 
 	@Controller
 	public void whatManga(WebSocketSession session, Event event) {
+	    if (!isConversationOn(event)) {
+            return;
+        }
+	    
 		// add code to ask user how many they want in return (1,2,3, etc)
 		Map<Integer, Manga> mangaByTitle = MyAnimeList.searchForMangaByTitle(event.getText(), 5);
 		StringBuilder msg = new StringBuilder();

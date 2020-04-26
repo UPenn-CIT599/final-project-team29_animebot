@@ -125,7 +125,7 @@ public class MyAnimeList {
             category = "bypopularity";
         }
         
-        categoryStr = AnimeTopCategory.valueOf(category.toLowerCase()).toString();
+        categoryStr = AnimeTopCategory.valueOf(category.replaceAll("\\s", "").toLowerCase()).toString();
         TreeMap<Integer, Anime> topAnime = new TreeMap<>();
         
         try {
@@ -172,7 +172,7 @@ public class MyAnimeList {
             category = "bypopularity";
         }
         
-        categoryStr = MangaTopCategory.valueOf(category.toLowerCase()).toString();
+        categoryStr = MangaTopCategory.valueOf(category.replaceAll("\\s", "").toLowerCase()).toString();
         TreeMap<Integer, Manga> topManga = new TreeMap<>();
         
         try {
