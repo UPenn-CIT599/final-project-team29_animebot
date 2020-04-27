@@ -94,6 +94,33 @@ Below is a list of commands you can use to interact with our animebot:
 * anime search
 * manga search
 
+And any questions you would like to ask AnimeBot! Try the questions below:
+* What are the episodes for (enter anime in question here)?
+* Is (anime) still airing episodes?
+* What is the status for (anime/manga)?
+* How many episodes does (anime) have?
+* When did (anime) premiere?
+* What was the inspiration behind (anime)?
+* What is the trailer for (anime)?
+* Give me more details about (anime).
+* What are the reviews for (anime)?
+* What is the English title for (anime)?
+* What is the prequel for (anime/manga)?
+* What are the sequels for (anime)?
+* Show me pictures for (anime/manga)
+* Give me recs for (anime/manga)
+* How many users loved (anime)?
+* How popular is (anime)?
+* Are there any news articles for (anime)?
+* How many chapters does (manga) have?
+* How many people scored (manga)
+* What is the score for (anime/manga)
+* What is the synopsis for (anime/manga)
+* How many volumes does (manga) have?
+* Is (manga) still publishing new manga?
+* Was the manga better than the anime for (title)?
+
+
 ---
 ## Technical Specifications
 How this all works.
