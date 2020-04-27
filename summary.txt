@@ -1,0 +1,21 @@
+AnimeBot
+Team Members: Andrea Mackie, Brian Chan, Gulcin Ennis
+
+Description:
+AnimeBot is a Java Bot that is integrated with the Jikan API which interfaces with MyAnimeList
+to return details on any anime and manga on Slack. The connection between the running Java program and 
+the Slack workspace is the Bot Token which was created.  AnimeBot uses the JBot framework and is able to
+pick up on user questions and commands by using regex controllers.
+
+Features"
+Anime Information
+Anime Recommendations
+Currently Airing Anime
+Top Ranked Anime
+Most Popular Anime
+And many more!
+
+Actual work done:
+Slack integration and bot controllers: Andrea Mackie
+Handling API connection/integration: Brian Chan
+QA - JUnit and documentation: Gulcin Ennis
