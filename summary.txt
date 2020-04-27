@@ -7,7 +7,7 @@ to return details on any anime and manga on Slack. The connection between the ru
 the Slack workspace is the Bot Token which was created.  AnimeBot uses the JBot framework and is able to
 pick up on user questions and commands by using regex controllers.
 
-Features"
+Features:
 Anime Information
 Anime Recommendations
 Currently Airing Anime
@@ -19,3 +19,5 @@ Actual work done:
 Slack integration and bot controllers: Andrea Mackie
 Handling API connection/integration: Brian Chan
 QA - JUnit and documentation: Gulcin Ennis
+
+GitHub repo link: https://github.com/UPenn-CIT599/final-project-team29_animebot
